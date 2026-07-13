@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Family Day 2026 - Amazon BCN1 Registration App">
+  <meta name="theme-color" content="#232F3E">
+  <title>Family Day 2026 - Amazon BCN1</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- CDN Libraries -->
+  <!-- QR Code Generation -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- QR Code Scanning -->
+  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <!-- Signature Pad -->
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- Language Toggle -->
+    <header class="header">
+      <div class="header__logo">
+        <span class="header__brand">🎉 Family Day 2026</span>
+        <span class="header__site">Amazon BCN1</span>
+      </div>
+      <button id="lang-toggle" class="header__lang-toggle" aria-label="Switch language">
+        ES | EN
+      </button>
+    </header>
+
+    <!-- Main Content (views rendered here by router) -->
+    <main id="main-content" class="main"></main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer__text">&copy; 2026 Amazon BCN1 — Family Day</p>
+    </footer>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/landing.js"></script>
+  <script src="js/wizard.js"></script>
+  <script src="js/steps/step1.js"></script>
+  <script src="js/steps/step2.js"></script>
+  <script src="js/steps/step3.js"></script>
+  <script src="js/steps/step4.js"></script>
+  <script src="js/steps/step5.js"></script>
+  <script src="js/signature.js"></script>
+  <script src="js/qr-generator.js"></script>
+  <script src="js/qr-scanner.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
