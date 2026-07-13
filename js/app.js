@@ -79,6 +79,11 @@
       I18n.init();
     }
 
+    // Configure API endpoint (Google Apps Script Web App)
+    if (typeof API !== 'undefined' && API.setEndpoint) {
+      API.setEndpoint('https://script.google.com/macros/s/AKfycbze1ZJHn0TAJVRNWYtB1tbSL30sfN3lApn4sxd0tt8pf6_5S051HAGLRhQpNaljYho/exec');
+    }
+
     // Initialize router with route map
     if (typeof Router !== 'undefined') {
       Router.init({
