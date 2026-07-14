@@ -126,6 +126,12 @@
 
       API.submitRegistration(payload)
         .then(function (result) {
+          if (result.success && result.data && result.data.status === 'duplicate') {
+            // Login already exists — show duplicate confirmation modal
+            showDuplicateModal(payload, submitBtn);
+            return;
+          }
+
           if (result.success) {
             // Store login and companions in sessionStorage for the success screen
             try {
@@ -183,6 +189,136 @@
       } else {
         mainContent.appendChild(alertEl);
       }
+    }
+
+    /**
+     * Show a modal dialog when a duplicate login is detected.
+     * Allows the user to update their existing registration or cancel.
+     * @param {object} payload - The registration payload
+     * @param {HTMLElement|null} submitBtn - The submit button to re-enable on cancel
+     */
+    function showDuplicateModal(payload, submitBtn) {
+      // Re-enable submit button
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = (typeof I18n !== 'undefined') ? I18n.t('form.step5.submit') : '✓ Guardar cambios';
+      }
+
+      // Remove existing modal if present
+      var existingModal = document.querySelector('.modal-overlay[data-duplicate-modal]');
+      if (existingModal) {
+        existingModal.parentNode.removeChild(existingModal);
+      }
+
+      var title = (typeof I18n !== 'undefined') ? I18n.t('registration.duplicate.title') : '⚠️ Ya estás registrado/a';
+      var message = (typeof I18n !== 'undefined') ? I18n.t('registration.duplicate.message') : 'Ya existe un registro con este login. ¿Quieres actualizar tu información?';
+      var updateText = (typeof I18n !== 'undefined') ? I18n.t('registration.duplicate.update') : 'Sí, actualizar';
+      var cancelText = (typeof I18n !== 'undefined') ? I18n.t('registration.duplicate.cancel') : 'Cancelar';
+
+      // Create modal overlay
+      var overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.setAttribute('data-duplicate-modal', 'true');
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-labelledby', 'duplicate-modal-title');
+
+      var modal = document.createElement('div');
+      modal.className = 'modal';
+
+      var modalTitle = document.createElement('h2');
+      modalTitle.className = 'modal__title';
+      modalTitle.id = 'duplicate-modal-title';
+      modalTitle.textContent = title;
+
+      var modalMessage = document.createElement('p');
+      modalMessage.className = 'modal__message';
+      modalMessage.textContent = message;
+
+      var modalActions = document.createElement('div');
+      modalActions.className = 'modal__actions';
+
+      var updateBtn = document.createElement('button');
+      updateBtn.className = 'btn btn--primary';
+      updateBtn.textContent = updateText;
+      updateBtn.type = 'button';
+
+      var cancelBtn = document.createElement('button');
+      cancelBtn.className = 'btn btn--outline';
+      cancelBtn.textContent = cancelText;
+      cancelBtn.type = 'button';
+
+      modalActions.appendChild(updateBtn);
+      modalActions.appendChild(cancelBtn);
+
+      modal.appendChild(modalTitle);
+      modal.appendChild(modalMessage);
+      modal.appendChild(modalActions);
+      overlay.appendChild(modal);
+
+      document.body.appendChild(overlay);
+
+      // Focus the update button for accessibility
+      updateBtn.focus();
+
+      // Handle "Sí, actualizar"
+      updateBtn.addEventListener('click', function () {
+        // Remove modal
+        overlay.parentNode.removeChild(overlay);
+
+        // Show loading state
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = (typeof I18n !== 'undefined') ? I18n.t('common.loading') : 'Cargando...';
+        }
+
+        API.updateRegistration(payload)
+          .then(function (result) {
+            if (result.success) {
+              // Store login and companions in sessionStorage for the success screen
+              try {
+                sessionStorage.setItem('registration_login', payload.login);
+                sessionStorage.setItem('registration_companions', String(payload.companionCount));
+              } catch (e) {
+                // sessionStorage may be unavailable
+              }
+
+              // Navigate to success screen
+              Router.navigate('#/success');
+
+              // Reset the form store
+              FormStore.reset();
+            } else {
+              showSubmitError(result.error || 'error.unexpected', submitBtn);
+            }
+          })
+          .catch(function () {
+            showSubmitError('error.network', submitBtn);
+          });
+      });
+
+      // Handle "Cancelar"
+      cancelBtn.addEventListener('click', function () {
+        overlay.parentNode.removeChild(overlay);
+      });
+
+      // Close modal on overlay click (outside the modal box)
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) {
+          overlay.parentNode.removeChild(overlay);
+        }
+      });
+
+      // Close modal on Escape key
+      function handleEscape(e) {
+        if (e.key === 'Escape') {
+          if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+          }
+          document.removeEventListener('keydown', handleEscape);
+        }
+      }
+      document.addEventListener('keydown', handleEscape);
     }
 
     // Re-render current view on language change

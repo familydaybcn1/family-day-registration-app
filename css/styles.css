@@ -1431,3 +1431,58 @@ a.btn {
     height: 100px;
   }
 }
+
+/* --------------------------------------------------------------------------
+   25. Duplicate Registration Modal (Overlay-based)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  animation: fadeInUp 0.2s ease-out;
+}
+
+.modal-overlay .modal {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.modal__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: var(--space-md);
+}
+
+.modal__message {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+}
+
+.modal__actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.modal__actions .btn {
+  flex: 1;
+  min-width: 120px;
+}

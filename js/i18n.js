@@ -173,7 +173,12 @@ var I18n = (function () {
       "partners.patasArriba.name": "Patas Para Arriba",
       "partners.patasArriba.desc": "Fundaci\u00F3n por un v\u00EDnculo sano entre personas y animales. Trabajan en educaci\u00F3n en escuelas, investigaci\u00F3n y apoyo a la adopci\u00F3n responsable en Catalunya.",
       "partners.glamazon.name": "Glamazon",
-      "partners.glamazon.desc": "Grupo de empleados/as de Amazon para la comunidad LGBTQIA+ y aliados. Creamos un espacio de apoyo centrado en la diversidad de identidades de género, orientaciones sexuales y expresiones."
+      "partners.glamazon.desc": "Grupo de empleados/as de Amazon para la comunidad LGBTQIA+ y aliados. Creamos un espacio de apoyo centrado en la diversidad de identidades de género, orientaciones sexuales y expresiones.",
+
+      "registration.duplicate.title": "⚠️ Ya estás registrado/a",
+      "registration.duplicate.message": "Ya existe un registro con este login. ¿Quieres actualizar tu información?",
+      "registration.duplicate.update": "Sí, actualizar",
+      "registration.duplicate.cancel": "Cancelar"
     },
     en: {
       "app.title": "Family Day 2026",
@@ -337,7 +342,12 @@ var I18n = (function () {
       "partners.patasArriba.name": "Patas Para Arriba",
       "partners.patasArriba.desc": "Foundation for a healthy bond between people and animals. They work on education in schools, research, and support for responsible adoption in Catalonia.",
       "partners.glamazon.name": "Glamazon",
-      "partners.glamazon.desc": "Amazon Employee-Led Group for LGBTQIA+ Amazonians and allies. We create a supportive community focused on diverse gender identities, sexual orientations, and expressions."
+      "partners.glamazon.desc": "Amazon Employee-Led Group for LGBTQIA+ Amazonians and allies. We create a supportive community focused on diverse gender identities, sexual orientations, and expressions.",
+
+      "registration.duplicate.title": "⚠️ Already registered",
+      "registration.duplicate.message": "A registration with this login already exists. Would you like to update your information?",
+      "registration.duplicate.update": "Yes, update",
+      "registration.duplicate.cancel": "Cancel"
     }
   };
 

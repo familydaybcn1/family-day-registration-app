@@ -68,6 +68,7 @@ function doGet(e) {
  * JSON body must include an "action" field:
  *   - submit:  append a new registration row
  *   - checkin: mark existing registration as checked-in
+ *   - update:  update an existing registration row (by login)
  */
 function doPost(e) {
   try {
@@ -82,6 +83,10 @@ function doPost(e) {
       return jsonResponse(checkInRegistration(body.login));
     }
 
+    if (action === 'update') {
+      return jsonResponse(updateRegistration(body.data));
+    }
+
     return jsonResponse({ status: 'error', message: 'Unknown action: ' + action });
   } catch (err) {
     return jsonResponse({ status: 'error', message: err.message });
@@ -94,10 +99,11 @@ function doPost(e) {
 
 /**
  * Appends a new registration row to the sheet.
+ * Checks for duplicate login before appending.
  * Uses LockService for concurrent safety.
  *
  * @param {Object} data - Registration form data
- * @returns {Object} Response with status and row number
+ * @returns {Object} Response with status and row number, or duplicate indicator
  */
 function submitRegistration(data) {
   if (!data) {
@@ -109,6 +115,17 @@ function submitRegistration(data) {
 
   try {
     var sheet = getSheet();
+
+    // Check for duplicate login in column C
+    var existingRow = findRowByLogin(sheet, data.login);
+    if (existingRow !== -1) {
+      return {
+        status: 'duplicate',
+        message: 'Login already registered',
+        existingRow: existingRow
+      };
+    }
+
     var timestamp = new Date().toISOString();
 
     // Handle signature: if data URL is too large, store 'signed' flag
@@ -155,6 +172,95 @@ function submitRegistration(data) {
   } finally {
     lock.releaseLock();
   }
+}
+
+/**
+ * Updates an existing registration row found by login (column C).
+ * Preserves the original timestamp (column A) and check-in status (O, P).
+ * Updates columns B through N with new data.
+ * Uses LockService for concurrent safety.
+ *
+ * @param {Object} data - Registration form data
+ * @returns {Object} Response with status
+ */
+function updateRegistration(data) {
+  if (!data) {
+    return { status: 'error', message: 'No data provided' };
+  }
+
+  if (!data.login) {
+    return { status: 'error', message: 'No login provided for update' };
+  }
+
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+
+  try {
+    var sheet = getSheet();
+    var targetRow = findRowByLogin(sheet, data.login);
+
+    if (targetRow === -1) {
+      return { status: 'error', message: 'Registration not found for login: ' + data.login };
+    }
+
+    // Handle signature: if data URL is too large, store 'signed' flag
+    var signatureValue = data.signature || '';
+    if (signatureValue.length > 50000) {
+      signatureValue = 'signed';
+    }
+
+    // Update columns B through N (columns 2–14), preserving A (timestamp) and O–P (check-in)
+    var updatedValues = [
+      data.fullName || '',                                    // B: FullName
+      data.login || '',                                       // C: Login
+      data.email || '',                                       // D: Email
+      data.dni || '',                                         // E: DNI
+      data.department || '',                                  // F: Department
+      Number(data.companionCount) || 0,                       // G: CompanionCount
+      Number(data.minorCount) || 0,                           // H: MinorCount
+      data.hasDietaryNeeds ? true : false,                    // I: HasDietaryNeeds
+      Array.isArray(data.dietaryOptions)                      // J: DietaryOptions
+        ? data.dietaryOptions.join(',')
+        : (data.dietaryOptions || ''),
+      data.dietaryDetails || '',                              // K: DietaryDetails
+      data.imageAuthorization || '',                          // L: ImageAuthorization
+      signatureValue,                                         // M: SignatureData
+      data.language || 'es'                                   // N: Language
+    ];
+
+    // Write updated values to columns B–N (columns 2 through 14)
+    sheet.getRange(targetRow, 2, 1, updatedValues.length).setValues([updatedValues]);
+
+    return {
+      status: 'ok',
+      message: 'Registration updated',
+      row: targetRow,
+      data: {
+        login: data.login,
+        companionCount: Number(data.companionCount) || 0
+      }
+    };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
+ * Finds a row by login in column C (case-insensitive).
+ *
+ * @param {Sheet} sheet - The spreadsheet sheet to search
+ * @param {string} login - The login to search for
+ * @returns {number} 1-indexed row number, or -1 if not found
+ */
+function findRowByLogin(sheet, login) {
+  if (!login) return -1;
+  var data = sheet.getDataRange().getValues();
+  for (var i = 0; i < data.length; i++) {
+    if (String(data[i][2]).toLowerCase() === String(login).toLowerCase()) {
+      return i + 1; // Sheet rows are 1-indexed
+    }
+  }
+  return -1;
 }
 
 /**

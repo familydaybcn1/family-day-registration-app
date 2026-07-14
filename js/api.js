@@ -222,6 +222,24 @@ var API = (function () {
   }
 
   /**
+   * Update an existing registration in the backend.
+   * Sends POST to Google Apps Script with action=update.
+   * Used when a duplicate login is detected and the user chooses to update.
+   * @param {object} data - Registration payload
+   * @returns {Promise<object>} { success: true, data: ... } or { success: false, error: errorKey }
+   */
+  function updateRegistration(data) {
+    return _executeWithRetry(function () {
+      return _fetchWithTimeout(_endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'update', data: data }),
+        mode: 'cors'
+      });
+    });
+  }
+
+  /**
    * Get aggregate statistics from the backend.
    * Sends GET to Google Apps Script with action=stats.
    * @returns {Promise<object>} { success: true, data: ... } or { success: false, error: errorKey }
@@ -238,6 +256,7 @@ var API = (function () {
     setEndpoint: setEndpoint,
     getEndpoint: getEndpoint,
     submitRegistration: submitRegistration,
+    updateRegistration: updateRegistration,
     getRegistrations: getRegistrations,
     checkIn: checkIn,
     getStats: getStats
