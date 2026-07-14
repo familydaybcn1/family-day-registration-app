@@ -101,6 +101,7 @@ var I18n = (function () {
       "success.download": "Descargar entrada",
       "success.warning": "IMPORTANTE - Acceso al evento: Es obligatorio llevar el badge identificativo de Amazon para acceder al evento. Tus familiares/acompañantes deberán venir acompañados de la persona registrada.",
       "success.backHome": "← Volver al inicio",
+      "success.ticketFooter": "¡Os esperamos con toda la familia! 🎊 — Amazon BCN1",
 
       "admin.title": "Panel de Administración",
       "admin.subtitle": "Family Day 2026 — Registros",
@@ -270,6 +271,7 @@ var I18n = (function () {
       "success.download": "Download ticket",
       "success.warning": "IMPORTANT - Event access: You must carry your Amazon ID badge to access the event. Your family/companions must be accompanied by the registered person.",
       "success.backHome": "← Back to home",
+      "success.ticketFooter": "We look forward to seeing you and your family! 🎊 — Amazon BCN1",
 
       "admin.title": "Admin Dashboard",
       "admin.subtitle": "Family Day 2026 — Registrations",
