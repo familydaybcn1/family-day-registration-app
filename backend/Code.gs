@@ -230,11 +230,8 @@ function getRegistrations(params) {
     return { status: 'ok', registrations: [] };
   }
 
-  // Skip header row if first row looks like headers
-  var startIndex = 0;
-  if (data.length > 0 && data[0][0] === 'Timestamp') {
-    startIndex = 1;
-  }
+  // Skip header row (always skip first row)
+  var startIndex = 1;
 
   var registrations = [];
 
@@ -311,10 +308,7 @@ function getStats() {
   }
 
   // Skip header row if present
-  var startIndex = 0;
-  if (data.length > 0 && data[0][0] === 'Timestamp') {
-    startIndex = 1;
-  }
+  var startIndex = 1;
 
   var total = 0;
   var companions = 0;

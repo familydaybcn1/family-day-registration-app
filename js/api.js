@@ -174,8 +174,9 @@ var API = (function () {
     return _executeWithRetry(function () {
       return _fetchWithTimeout(_endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'submit', data: data })
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'submit', data: data }),
+        mode: 'cors'
       });
     });
   }
@@ -213,8 +214,9 @@ var API = (function () {
     return _executeWithRetry(function () {
       return _fetchWithTimeout(_endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'checkin', login: login })
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'checkin', login: login }),
+        mode: 'cors'
       });
     });
   }
