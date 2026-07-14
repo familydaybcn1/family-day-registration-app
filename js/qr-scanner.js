@@ -148,6 +148,12 @@ var QRScanner = (function () {
           // Successful check-in
           var personInfo = data.login ? ' (' + data.login + ')' : '';
           _showScanMessage('✓ PUEDE PASAR' + personInfo, 'success');
+
+          // Check image authorization — warn if NOT authorized
+          if (data.imageAuthorization !== 'authorize') {
+            _showImageAuthWarning();
+          }
+
           // Dispatch event so AdminDashboard can refresh its list
           var event;
           try {
@@ -209,6 +215,43 @@ var QRScanner = (function () {
         msgContainer.removeAttribute('role');
       }
     }, 4000);
+  }
+
+  /**
+   * Show a prominent image authorization warning after check-in.
+   * Displayed when the person did NOT authorize image rights.
+   * @private
+   */
+  function _showImageAuthWarning() {
+    // Remove any existing warning
+    var existing = document.getElementById('image-auth-warning');
+    if (existing) {
+      existing.parentNode.removeChild(existing);
+    }
+
+    var warningEl = document.createElement('div');
+    warningEl.id = 'image-auth-warning';
+    warningEl.className = 'image-auth-warning';
+    warningEl.setAttribute('role', 'alert');
+    warningEl.setAttribute('aria-live', 'assertive');
+    warningEl.textContent = '⚠️ ATENCIÓN: Esta persona NO autorizó derechos de imagen. Dar lanyard de color diferente.';
+
+    var msgContainer = document.getElementById('scanner-message');
+    if (msgContainer && msgContainer.parentNode) {
+      msgContainer.parentNode.insertBefore(warningEl, msgContainer.nextSibling);
+    } else {
+      var container = document.getElementById(_containerId);
+      if (container && container.parentNode) {
+        container.parentNode.appendChild(warningEl);
+      }
+    }
+
+    // Auto-hide after 8 seconds (longer than normal messages since it's critical)
+    setTimeout(function () {
+      if (warningEl && warningEl.parentNode) {
+        warningEl.parentNode.removeChild(warningEl);
+      }
+    }, 8000);
   }
 
   /**

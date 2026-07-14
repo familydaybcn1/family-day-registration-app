@@ -3,10 +3,11 @@
  * QR Code Generator & Success Screen Module
  *
  * Generates QR codes encoding registration identifiers and renders
- * the success/confirmation screen with download capability.
+ * the success/confirmation screen as a premium event ticket with download capability.
  *
  * QR Payload format: "FAMILYDAY2026|{login}|{companions}"
  * Uses qrcode.js CDN global (QRCode) for QR generation.
+ * Uses html2canvas CDN for ticket PNG download.
  */
 'use strict';
 
@@ -44,31 +45,49 @@ var QRGenerator = (function () {
   }
 
   /**
-   * Download the QR code as a PNG image.
-   * Finds the canvas inside the element and triggers a download.
+   * Download the ticket element as a PNG image using html2canvas.
    *
-   * @param {HTMLElement} element - Container element holding the QR canvas
-   * @param {string} filename - Desired filename for the download (e.g., "ticket-margarl.png")
+   * @param {HTMLElement} ticketElement - The .ticket element to capture
+   * @param {string} filename - Desired filename for the download
    */
-  function downloadAsImage(element, filename) {
-    var canvas = element.querySelector('canvas');
-    if (!canvas) {
-      console.warn('[QRGenerator] No canvas found for download');
+  function downloadTicketAsImage(ticketElement, filename) {
+    if (typeof html2canvas === 'undefined') {
+      console.warn('[QRGenerator] html2canvas library not available');
+      // Fallback: try canvas-based QR download
+      var canvas = ticketElement.querySelector('canvas');
+      if (canvas) {
+        var dataURL = canvas.toDataURL('image/png');
+        var link = document.createElement('a');
+        link.href = dataURL;
+        link.download = filename || 'family-day-2026-ticket.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
       return;
     }
 
-    var dataURL = canvas.toDataURL('image/png');
-    var link = document.createElement('a');
-    link.href = dataURL;
-    link.download = filename || 'family-day-2026-ticket.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    html2canvas(ticketElement, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#FFFFFF'
+    }).then(function (canvas) {
+      var dataURL = canvas.toDataURL('image/png');
+      var link = document.createElement('a');
+      link.href = dataURL;
+      link.download = filename || 'family-day-2026-ticket.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch(function (err) {
+      console.error('[QRGenerator] html2canvas error:', err);
+    });
   }
 
   /**
-   * Render the full success screen into a container.
-   * Displays QR code, registration details, download button, and warning.
+   * Render the full success screen as a premium event ticket.
+   * Displays a styled ticket card with QR code, registration details,
+   * and a colored left border indicating image authorization status.
    *
    * @param {HTMLElement} container - The main content container
    * @param {string} login - The employee login
@@ -77,95 +96,118 @@ var QRGenerator = (function () {
   function renderSuccessScreen(container, login, companions) {
     container.innerHTML = '';
 
-    // Success card wrapper
-    var card = document.createElement('div');
-    card.className = 'card text-center';
+    // Read image authorization from sessionStorage
+    var imageAuth = '';
+    try {
+      imageAuth = sessionStorage.getItem('registration_imageAuth') || '';
+    } catch (e) {
+      // sessionStorage may be unavailable
+    }
 
-    // Title
-    var title = document.createElement('h1');
-    title.className = 'card__title';
-    title.style.fontSize = 'var(--font-size-xl)';
-    title.style.color = 'var(--success)';
-    title.textContent = I18n.t('success.title');
-    title.setAttribute('data-i18n', 'success.title');
-    card.appendChild(title);
+    // Determine left border color based on authorization
+    var borderColor = (imageAuth === 'authorize') ? '#1B8B00' : '#D32F2F';
 
-    // Subtitle
-    var subtitle = document.createElement('p');
-    subtitle.className = 'mt-sm mb-lg';
-    subtitle.style.color = 'var(--text-secondary)';
-    subtitle.textContent = I18n.t('success.subtitle');
-    subtitle.setAttribute('data-i18n', 'success.subtitle');
-    card.appendChild(subtitle);
+    // Build the ticket HTML
+    var ticketWrapper = document.createElement('div');
+    ticketWrapper.style.padding = '1rem 0';
 
-    // QR Code container (centered)
-    var qrWrapper = document.createElement('div');
-    qrWrapper.className = 'mb-lg';
-    qrWrapper.style.display = 'flex';
-    qrWrapper.style.justifyContent = 'center';
+    var ticket = document.createElement('div');
+    ticket.className = 'ticket';
+    ticket.style.borderLeft = '8px solid ' + borderColor;
+
+    // --- Header ---
+    var header = document.createElement('div');
+    header.className = 'ticket__header';
+    var headerTitle = document.createElement('h2');
+    headerTitle.textContent = '🎉 FAMILY DAY 2026';
+    var headerSubtitle = document.createElement('p');
+    headerSubtitle.textContent = 'Amazon BCN1';
+    header.appendChild(headerTitle);
+    header.appendChild(headerSubtitle);
+    ticket.appendChild(header);
+
+    // --- Body ---
+    var body = document.createElement('div');
+    body.className = 'ticket__body';
+
+    // Info section
+    var info = document.createElement('div');
+    info.className = 'ticket__info';
+
+    // Peccy image
+    var peccy = document.createElement('img');
+    peccy.src = 'assets/peccy.png';
+    peccy.className = 'ticket__peccy';
+    peccy.alt = 'Peccy mascot';
+    info.appendChild(peccy);
+
+    // Login
+    var loginP = document.createElement('p');
+    loginP.innerHTML = '<strong>Login:</strong> ' + login;
+    info.appendChild(loginP);
+
+    // Companions
+    var companionsLabel = (typeof I18n !== 'undefined') ? I18n.t('success.companionsLabel') : 'Acompañantes';
+    var companionsP = document.createElement('p');
+    companionsP.innerHTML = '<strong>' + companionsLabel + ':</strong> ' + String(companions);
+    info.appendChild(companionsP);
+
+    // Date & time
+    var dateP = document.createElement('p');
+    dateP.textContent = '📅 19 sept 2026 • ⏰ 09:30 – 14:00';
+    info.appendChild(dateP);
+
+    // Location
+    var locationP = document.createElement('p');
+    locationP.textContent = '📍 Amazon BCN1, El Prat de Llobregat';
+    info.appendChild(locationP);
+
+    body.appendChild(info);
+
+    // QR section
+    var qrSection = document.createElement('div');
+    qrSection.className = 'ticket__qr';
     var qrElement = generate(login, companions);
-    qrWrapper.appendChild(qrElement);
-    card.appendChild(qrWrapper);
+    qrSection.appendChild(qrElement);
+    body.appendChild(qrSection);
 
-    // Login label + value
-    var loginInfo = document.createElement('p');
-    loginInfo.className = 'mt-md';
-    var loginLabel = document.createElement('strong');
-    loginLabel.textContent = I18n.t('success.loginLabel') + ': ';
-    loginLabel.setAttribute('data-i18n', 'success.loginLabel');
-    loginInfo.appendChild(loginLabel);
-    var loginValue = document.createElement('span');
-    loginValue.textContent = login;
-    loginInfo.appendChild(loginValue);
-    card.appendChild(loginInfo);
+    ticket.appendChild(body);
 
-    // Companions label + value
-    var companionsInfo = document.createElement('p');
-    companionsInfo.className = 'mt-sm mb-lg';
-    var companionsLabel = document.createElement('strong');
-    companionsLabel.textContent = I18n.t('success.companionsLabel') + ': ';
-    companionsLabel.setAttribute('data-i18n', 'success.companionsLabel');
-    companionsInfo.appendChild(companionsLabel);
-    var companionsValue = document.createElement('span');
-    companionsValue.textContent = String(companions);
-    companionsInfo.appendChild(companionsValue);
-    card.appendChild(companionsInfo);
+    // --- Footer ---
+    var footer = document.createElement('div');
+    footer.className = 'ticket__footer';
+    var footerMsg = (typeof I18n !== 'undefined') ? I18n.t('success.ticketFooter') : '¡Os esperamos con toda la familia! 🎊';
+    footer.textContent = footerMsg;
+    ticket.appendChild(footer);
 
-    // Download button
+    ticketWrapper.appendChild(ticket);
+    container.appendChild(ticketWrapper);
+
+    // --- Download button ---
     var downloadBtn = document.createElement('button');
-    downloadBtn.className = 'btn btn--primary';
-    downloadBtn.textContent = I18n.t('success.download');
-    downloadBtn.setAttribute('data-i18n', 'success.download');
-    downloadBtn.setAttribute('aria-label', I18n.t('success.download'));
+    downloadBtn.className = 'btn btn--primary btn--block ticket-download-btn';
+    var downloadText = (typeof I18n !== 'undefined') ? I18n.t('success.download') : '📥 Descargar entrada';
+    downloadBtn.textContent = downloadText;
+    downloadBtn.setAttribute('aria-label', downloadText);
     downloadBtn.addEventListener('click', function () {
-      downloadAsImage(qrElement, 'family-day-2026-' + login + '.png');
+      downloadTicketAsImage(ticket, 'family-day-2026-' + login + '.png');
     });
-    card.appendChild(downloadBtn);
+    container.appendChild(downloadBtn);
 
-    // Warning box
-    var warning = document.createElement('div');
-    warning.className = 'alert alert--warning mt-lg';
-    warning.textContent = I18n.t('success.warning');
-    warning.setAttribute('data-i18n', 'success.warning');
-    card.appendChild(warning);
-
-    // Back to landing button
+    // --- Back to home button ---
     var backBtn = document.createElement('a');
     backBtn.href = '#/';
-    backBtn.className = 'btn btn--outline btn--block mt-lg';
-    backBtn.textContent = I18n.t('success.backHome');
-    backBtn.setAttribute('data-i18n', 'success.backHome');
-    backBtn.setAttribute('aria-label', I18n.t('success.backHome'));
-    backBtn.style.textDecoration = 'none';
-    card.appendChild(backBtn);
-
-    container.appendChild(card);
+    backBtn.className = 'btn btn--outline btn--block ticket-back-btn';
+    var backText = (typeof I18n !== 'undefined') ? I18n.t('success.backHome') : 'Volver al inicio';
+    backBtn.textContent = backText;
+    backBtn.setAttribute('aria-label', backText);
+    container.appendChild(backBtn);
   }
 
   // Public API
   return {
     generate: generate,
-    downloadAsImage: downloadAsImage,
+    downloadTicketAsImage: downloadTicketAsImage,
     renderSuccessScreen: renderSuccessScreen
   };
 })();

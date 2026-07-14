@@ -109,6 +109,7 @@
         try {
           sessionStorage.setItem('registration_login', payload.login);
           sessionStorage.setItem('registration_companions', String(payload.companionCount));
+          sessionStorage.setItem('registration_imageAuth', payload.imageAuthorization || '');
         } catch (e) {
           // sessionStorage may be unavailable
         }
@@ -137,6 +138,7 @@
             try {
               sessionStorage.setItem('registration_login', payload.login);
               sessionStorage.setItem('registration_companions', String(payload.companionCount));
+              sessionStorage.setItem('registration_imageAuth', payload.imageAuthorization || '');
             } catch (e) {
               // sessionStorage may be unavailable
             }
@@ -279,6 +281,7 @@
               try {
                 sessionStorage.setItem('registration_login', payload.login);
                 sessionStorage.setItem('registration_companions', String(payload.companionCount));
+                sessionStorage.setItem('registration_imageAuth', payload.imageAuthorization || '');
               } catch (e) {
                 // sessionStorage may be unavailable
               }

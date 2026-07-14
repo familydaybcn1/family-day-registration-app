@@ -85,7 +85,9 @@
   "success.subtitle": "Tu entrada para el Family Day 2026",
   "success.loginLabel": "Login",
   "success.companionsLabel": "Acompañantes",
-  "success.download": "Descargar entrada",
+  "success.download": "📥 Descargar entrada",
+  "success.ticketFooter": "¡Os esperamos con toda la familia! 🎊",
+  "success.backHome": "Volver al inicio",
   "success.warning": "IMPORTANTE - Acceso al evento: Es obligatorio llevar el badge identificativo de Amazon para acceder al evento. Tus familiares/acompañantes deberán venir acompañados de la persona registrada.",
 
   "admin.title": "Panel de Administración",

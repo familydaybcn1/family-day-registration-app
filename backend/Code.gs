@@ -314,7 +314,8 @@ function checkInRegistration(login) {
       status: 'ok',
       message: 'Check-in successful',
       login: login,
-      checkedInTimestamp: checkInTime
+      checkedInTimestamp: checkInTime,
+      imageAuthorization: data[targetRow - 1][11]  // Column L
     };
   } finally {
     lock.releaseLock();

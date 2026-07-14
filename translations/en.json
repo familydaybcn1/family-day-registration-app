@@ -85,7 +85,9 @@
   "success.subtitle": "Your Family Day 2026 ticket",
   "success.loginLabel": "Login",
   "success.companionsLabel": "Companions",
-  "success.download": "Download ticket",
+  "success.download": "📥 Download ticket",
+  "success.ticketFooter": "We look forward to seeing the whole family! 🎊",
+  "success.backHome": "Back to home",
   "success.warning": "IMPORTANT - Event access: You must carry your Amazon ID badge to access the event. Your family/companions must be accompanied by the registered person.",
 
   "admin.title": "Admin Dashboard",
