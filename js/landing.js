@@ -100,12 +100,24 @@ var LandingPage = (function () {
         '<div class="card mb-lg">' +
           '<h2 class="card__title text-center" data-i18n="landing.activities.title">' + I18n.t('landing.activities.title') + '</h2>' +
           '<div class="activities-grid">' +
-            '<div class="activities-grid__item"><span class="activities-grid__emoji">\uD83D\uDC76</span><span data-i18n="landing.activities.babies">' + I18n.t('landing.activities.babies') + '</span></div>' +
-            '<div class="activities-grid__item"><span class="activities-grid__emoji">\uD83C\uDFAD</span><span data-i18n="landing.activities.shows">' + I18n.t('landing.activities.shows') + '</span></div>' +
-            '<div class="activities-grid__item"><span class="activities-grid__emoji">\uD83C\uDFC6</span><span data-i18n="landing.activities.contests">' + I18n.t('landing.activities.contests') + '</span></div>' +
-            '<div class="activities-grid__item"><span class="activities-grid__emoji">\uD83E\uDD1D</span><span data-i18n="landing.activities.volunteering">' + I18n.t('landing.activities.volunteering') + '</span></div>' +
-            '<div class="activities-grid__item"><span class="activities-grid__emoji">\uD83C\uDF55</span><span data-i18n="landing.activities.food">' + I18n.t('landing.activities.food') + '</span></div>' +
-            '<div class="activities-grid__item"><span class="activities-grid__emoji">\uD83D\uDD27</span><span data-i18n="landing.activities.workshops">' + I18n.t('landing.activities.workshops') + '</span></div>' +
+            '<div class="activities-grid__item" role="button" tabindex="0"><span class="activities-grid__emoji">\uD83D\uDC76</span><span data-i18n="landing.activities.babies">' + I18n.t('landing.activities.babies') + '</span></div>' +
+            '<div class="activities-grid__item" role="button" tabindex="0"><span class="activities-grid__emoji">\uD83C\uDFAD</span><span data-i18n="landing.activities.shows">' + I18n.t('landing.activities.shows') + '</span></div>' +
+            '<div class="activities-grid__item" role="button" tabindex="0"><span class="activities-grid__emoji">\uD83C\uDFC6</span><span data-i18n="landing.activities.contests">' + I18n.t('landing.activities.contests') + '</span></div>' +
+            '<div class="activities-grid__item" role="button" tabindex="0"><span class="activities-grid__emoji">\uD83E\uDD1D</span><span data-i18n="landing.activities.volunteering">' + I18n.t('landing.activities.volunteering') + '</span></div>' +
+            '<div class="activities-grid__item" role="button" tabindex="0"><span class="activities-grid__emoji">\uD83C\uDF55</span><span data-i18n="landing.activities.food">' + I18n.t('landing.activities.food') + '</span></div>' +
+            '<div class="activities-grid__item" role="button" tabindex="0"><span class="activities-grid__emoji">\uD83D\uDD27</span><span data-i18n="landing.activities.workshops">' + I18n.t('landing.activities.workshops') + '</span></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<!-- Colaboran (NGO Partners) -->' +
+        '<div class="card mb-lg">' +
+          '<h2 class="card__title text-center">\uD83E\uDD1D Colaboran</h2>' +
+          '<p class="text-center mb-md" style="color:var(--text-secondary)">Fundaciones con las que trabajaremos en actividades de voluntariado</p>' +
+          '<div class="partners-grid">' +
+            '<div class="partners-grid__item"><span class="partners-grid__name">Bona Voluntat en Acci\u00F3</span></div>' +
+            '<div class="partners-grid__item"><span class="partners-grid__name">Fundaci\u00F3 Roure</span></div>' +
+            '<div class="partners-grid__item"><span class="partners-grid__name">ACATHI</span></div>' +
+            '<div class="partners-grid__item"><span class="partners-grid__name">Patas Para Arriba</span></div>' +
           '</div>' +
         '</div>' +
 
@@ -201,6 +213,23 @@ var LandingPage = (function () {
         }
       });
     }
+
+    // Activity items — "coming soon" modal
+    var activityItems = document.querySelectorAll('.activities-grid__item');
+    activityItems.forEach(function (item) {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', function () {
+        var emoji = item.querySelector('.activities-grid__emoji').textContent;
+        var name = item.querySelector('[data-i18n]').textContent;
+        showActivityModal(emoji, name);
+      });
+      item.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+      });
+    });
   }
 
   /**
