@@ -53,18 +53,18 @@ var QRGenerator = (function () {
   function downloadTicketAsImage(ticketElement, filename) {
     if (typeof html2canvas === 'undefined') {
       console.warn('[QRGenerator] html2canvas library not available');
-      // Fallback: try canvas-based QR download
-      var canvas = ticketElement.querySelector('canvas');
-      if (canvas) {
-        var dataURL = canvas.toDataURL('image/png');
-        var link = document.createElement('a');
-        link.href = dataURL;
-        link.download = filename || 'family-day-2026-ticket.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
       return;
+    }
+
+    // Convert QR canvas to img before capture (html2canvas doesn't capture canvas well)
+    var qrCanvas = ticketElement.querySelector('canvas');
+    var tempImg = null;
+    if (qrCanvas) {
+      tempImg = document.createElement('img');
+      tempImg.src = qrCanvas.toDataURL('image/png');
+      tempImg.style.width = qrCanvas.style.width || qrCanvas.width + 'px';
+      tempImg.style.height = qrCanvas.style.height || qrCanvas.height + 'px';
+      qrCanvas.parentNode.replaceChild(tempImg, qrCanvas);
     }
 
     html2canvas(ticketElement, {
@@ -83,8 +83,17 @@ var QRGenerator = (function () {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      // Restore QR canvas
+      if (tempImg && qrCanvas) {
+        tempImg.parentNode.replaceChild(qrCanvas, tempImg);
+      }
     }).catch(function (err) {
       console.error('[QRGenerator] html2canvas error:', err);
+      // Restore QR canvas on error too
+      if (tempImg && qrCanvas && tempImg.parentNode) {
+        tempImg.parentNode.replaceChild(qrCanvas, tempImg);
+      }
     });
   }
 
@@ -199,7 +208,10 @@ var QRGenerator = (function () {
     downloadBtn.textContent = downloadText;
     downloadBtn.setAttribute('aria-label', downloadText);
     downloadBtn.addEventListener('click', function () {
-      downloadTicketAsImage(ticket, 'family-day-2026-' + login + '.png');
+      // Small delay to ensure QR canvas is fully rendered
+      setTimeout(function() {
+        downloadTicketAsImage(ticket, 'family-day-2026-' + login + '.png');
+      }, 500);
     });
     container.appendChild(downloadBtn);
 
