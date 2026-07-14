@@ -326,6 +326,68 @@ a:focus {
   line-height: 1.8;
 }
 
+/* Event Details Card — Fun layout with icons */
+.card--event {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF8E1 100%);
+  border: 2px solid var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.event-details {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.event-details__icon {
+  font-size: 2rem;
+  min-width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-light);
+  border-radius: var(--radius-md);
+}
+
+.event-details__info {
+  flex: 1;
+}
+
+.event-details__date {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.event-details__time {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.event-details__location {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.event-details__peccy {
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
+.peccy-img {
+  width: 120px;
+  height: auto;
+  margin: 0 auto;
+  animation: pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
 .landing__qr {
   display: inline-block;
   padding: var(--space-md);

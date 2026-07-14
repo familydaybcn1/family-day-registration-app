@@ -74,16 +74,25 @@ var LandingPage = (function () {
         '</div>' +
 
         '<!-- Event Details -->' +
-        '<div class="card mb-lg">' +
-          '<div class="landing__event-details">' +
-            '<p><strong data-i18n="landing.event.date">' + I18n.t('landing.event.date') + '</strong></p>' +
-            '<p data-i18n="landing.event.time">' + I18n.t('landing.event.time') + '</p>' +
-            '<p data-i18n="landing.event.location">' + I18n.t('landing.event.location') + '</p>' +
-            '<p class="mt-sm">' +
-              '<a href="https://maps.google.com/?q=Amazon+BCN1+El+Prat+de+Llobregat" target="_blank" rel="noopener noreferrer" data-i18n="landing.event.mapLink">' +
-                I18n.t('landing.event.mapLink') +
+        '<div class="card card--event mb-lg">' +
+          '<div class="event-details">' +
+            '<div class="event-details__icon">📅</div>' +
+            '<div class="event-details__info">' +
+              '<h3 class="event-details__date" data-i18n="landing.event.date">' + I18n.t('landing.event.date') + '</h3>' +
+              '<p class="event-details__time">⏰ ' + I18n.t('landing.event.time') + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-details">' +
+            '<div class="event-details__icon">📍</div>' +
+            '<div class="event-details__info">' +
+              '<p class="event-details__location" data-i18n="landing.event.location">' + I18n.t('landing.event.location') + '</p>' +
+              '<a href="https://maps.google.com/?q=Amazon+BCN1+El+Prat+de+Llobregat" target="_blank" rel="noopener noreferrer" class="btn btn--outline mt-sm" style="display:inline-flex;gap:0.5rem;">' +
+                '🗺️ <span data-i18n="landing.event.mapLink">' + I18n.t('landing.event.mapLink') + '</span>' +
               '</a>' +
-            '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-details__peccy">' +
+            '<img src="assets/peccy.png" alt="Peccy" class="peccy-img" onerror="this.style.display=\'none\'">' +
           '</div>' +
         '</div>' +
 
