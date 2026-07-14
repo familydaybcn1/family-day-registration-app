@@ -109,18 +109,6 @@ var LandingPage = (function () {
           '</div>' +
         '</div>' +
 
-        '<!-- Colaboran (NGO Partners) -->' +
-        '<div class="card mb-lg">' +
-          '<h2 class="card__title text-center" data-i18n="partners.title">' + I18n.t('partners.title') + '</h2>' +
-          '<p class="text-center mb-md" style="color:var(--text-secondary)" data-i18n="partners.subtitle">' + I18n.t('partners.subtitle') + '</p>' +
-          '<div class="partners-grid">' +
-            '<div class="partners-grid__item"><img src="assets/bona-voluntat.png" alt="Bona Voluntat en Acció" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.bonaVoluntat.name">' + I18n.t('partners.bonaVoluntat.name') + '</span><span class="partners-grid__desc" data-i18n="partners.bonaVoluntat.desc">' + I18n.t('partners.bonaVoluntat.desc') + '</span></div>' +
-            '<div class="partners-grid__item"><img src="assets/fundacion-roure.png" alt="Fundació Roure" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.roure.name">' + I18n.t('partners.roure.name') + '</span><span class="partners-grid__desc" data-i18n="partners.roure.desc">' + I18n.t('partners.roure.desc') + '</span></div>' +
-            '<div class="partners-grid__item"><img src="assets/acathi.png" alt="ACATHI" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.acathi.name">' + I18n.t('partners.acathi.name') + '</span><span class="partners-grid__desc" data-i18n="partners.acathi.desc">' + I18n.t('partners.acathi.desc') + '</span></div>' +
-            '<div class="partners-grid__item"><img src="assets/patas-para-arriba.png" alt="Patas Para Arriba" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.patasArriba.name">' + I18n.t('partners.patasArriba.name') + '</span><span class="partners-grid__desc" data-i18n="partners.patasArriba.desc">' + I18n.t('partners.patasArriba.desc') + '</span></div>' +
-          '</div>' +
-        '</div>' +
-
         '<!-- QR Code & Share -->' +
         '<div class="card mb-lg text-center">' +
           '<p class="mb-md" data-i18n="landing.shareQr">' + I18n.t('landing.shareQr') + '</p>' +
@@ -214,14 +202,19 @@ var LandingPage = (function () {
       });
     }
 
-    // Activity items — "coming soon" modal
+    // Activity items — "coming soon" modal (except Volunteering)
     var activityItems = document.querySelectorAll('.activities-grid__item');
     activityItems.forEach(function (item) {
       item.style.cursor = 'pointer';
       item.addEventListener('click', function () {
         var emoji = item.querySelector('.activities-grid__emoji').textContent;
         var name = item.querySelector('[data-i18n]').textContent;
-        showActivityModal(emoji, name);
+        var i18nKey = item.querySelector('[data-i18n]').getAttribute('data-i18n');
+        if (i18nKey === 'landing.activities.volunteering') {
+          showVolunteeringModal();
+        } else {
+          showActivityModal(emoji, name);
+        }
       });
       item.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -378,6 +371,57 @@ var LandingPage = (function () {
         '<h3 style="text-align:center;font-size:1.25rem;font-weight:700;margin-bottom:0.75rem;">' + name + '</h3>' +
         '<p style="text-align:center;color:var(--primary);font-weight:600;font-size:1.1rem;">🔜 Más detalles próximamente</p>' +
         '<p style="text-align:center;color:var(--text-secondary);margin-top:0.5rem;">¡Se irán actualizando, estén atentos! 🎉</p>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    // Close handlers
+    modal.querySelector('.modal__close').addEventListener('click', function () {
+      modal.remove();
+    });
+    modal.querySelector('.modal__backdrop').addEventListener('click', function () {
+      modal.remove();
+    });
+  }
+
+  /**
+   * Show the Volunteering modal with NGO partners and Glamazon.
+   */
+  function showVolunteeringModal() {
+    // Remove existing modal if any
+    var existing = document.getElementById('activity-modal');
+    if (existing) existing.remove();
+
+    var partners = [
+      { logo: 'assets/bona-voluntat.png', nameKey: 'partners.bonaVoluntat.name', descKey: 'partners.bonaVoluntat.desc' },
+      { logo: 'assets/fundacion-roure.png', nameKey: 'partners.roure.name', descKey: 'partners.roure.desc' },
+      { logo: 'assets/acathi.png', nameKey: 'partners.acathi.name', descKey: 'partners.acathi.desc' },
+      { logo: 'assets/patas-para-arriba.png', nameKey: 'partners.patasArriba.name', descKey: 'partners.patasArriba.desc' },
+      { logo: 'assets/glamazon.png', nameKey: 'partners.glamazon.name', descKey: 'partners.glamazon.desc' }
+    ];
+
+    var gridItems = '';
+    partners.forEach(function (p) {
+      gridItems += '' +
+        '<div class="volunteering-grid__item">' +
+          '<img src="' + p.logo + '" alt="' + I18n.t(p.nameKey) + '" class="volunteering-grid__logo">' +
+          '<div class="volunteering-grid__info">' +
+            '<div class="volunteering-grid__name">' + I18n.t(p.nameKey) + '</div>' +
+            '<div class="volunteering-grid__desc">' + I18n.t(p.descKey) + '</div>' +
+          '</div>' +
+        '</div>';
+    });
+
+    var modal = document.createElement('div');
+    modal.id = 'activity-modal';
+    modal.className = 'modal modal--large';
+    modal.innerHTML = '' +
+      '<div class="modal__backdrop"></div>' +
+      '<div class="modal__content">' +
+        '<button class="modal__close" aria-label="' + I18n.t('common.close') + '">&times;</button>' +
+        '<h3 style="text-align:center;font-size:1.4rem;font-weight:800;margin-bottom:0.25rem;">\uD83E\uDD1D ' + I18n.t('landing.activities.volunteering') + '</h3>' +
+        '<p style="text-align:center;color:var(--text-secondary);margin-bottom:1rem;">' + I18n.t('partners.subtitle') + '</p>' +
+        '<div class="volunteering-grid">' + gridItems + '</div>' +
       '</div>';
 
     document.body.appendChild(modal);

@@ -1261,6 +1261,69 @@ a.btn {
   background-color: var(--border);
 }
 
+/* --------------------------------------------------------------------------
+   23. Large Modal (Volunteering)
+   -------------------------------------------------------------------------- */
+.modal--large .modal__content {
+  max-width: 700px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------------
+   24. Volunteering Grid (inside modal)
+   -------------------------------------------------------------------------- */
+.volunteering-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.volunteering-grid__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #F8F9FA;
+  border: 1px solid #E0E0E0;
+}
+
+.volunteering-grid__logo {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.volunteering-grid__info {
+  flex: 1;
+}
+
+.volunteering-grid__name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #232F3E;
+  margin-bottom: 0.25rem;
+}
+
+.volunteering-grid__desc {
+  font-size: 0.8rem;
+  color: #565959;
+  line-height: 1.4;
+}
+
+@media (min-width: 600px) {
+  .volunteering-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .volunteering-grid__item:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 
 /* --------------------------------------------------------------------------
    23. Partners / NGO Grid

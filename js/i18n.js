@@ -171,7 +171,9 @@ var I18n = (function () {
       "partners.acathi.name": "ACATHI",
       "partners.acathi.desc": "Asociaci\u00F3n por la inclusi\u00F3n de personas LGTBI+ migrantes y refugiadas en Catalunya. Ofrecen acompa\u00F1amiento, formaci\u00F3n y un espacio seguro para la diversidad.",
       "partners.patasArriba.name": "Patas Para Arriba",
-      "partners.patasArriba.desc": "Fundaci\u00F3n por un v\u00EDnculo sano entre personas y animales. Trabajan en educaci\u00F3n en escuelas, investigaci\u00F3n y apoyo a la adopci\u00F3n responsable en Catalunya."
+      "partners.patasArriba.desc": "Fundaci\u00F3n por un v\u00EDnculo sano entre personas y animales. Trabajan en educaci\u00F3n en escuelas, investigaci\u00F3n y apoyo a la adopci\u00F3n responsable en Catalunya.",
+      "partners.glamazon.name": "Glamazon",
+      "partners.glamazon.desc": "Grupo de empleados/as de Amazon para la comunidad LGBTQIA+ y aliados. Creamos un espacio de apoyo centrado en la diversidad de identidades de género, orientaciones sexuales y expresiones."
     },
     en: {
       "app.title": "Family Day 2026",
@@ -333,7 +335,9 @@ var I18n = (function () {
       "partners.acathi.name": "ACATHI",
       "partners.acathi.desc": "Association for the inclusion of LGBTQI+ migrants and refugees in Catalonia. They offer support, training and a safe space for cultural and affective diversity.",
       "partners.patasArriba.name": "Patas Para Arriba",
-      "partners.patasArriba.desc": "Foundation for a healthy bond between people and animals. They work on education in schools, research, and support for responsible adoption in Catalonia."
+      "partners.patasArriba.desc": "Foundation for a healthy bond between people and animals. They work on education in schools, research, and support for responsible adoption in Catalonia.",
+      "partners.glamazon.name": "Glamazon",
+      "partners.glamazon.desc": "Amazon Employee-Led Group for LGBTQIA+ Amazonians and allies. We create a supportive community focused on diverse gender identities, sexual orientations, and expressions."
     }
   };
 
