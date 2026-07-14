@@ -43,14 +43,21 @@ var AdminDashboard = (function () {
     }
 
     return API.getRegistrations().then(function (result) {
-      if (result.success && Array.isArray(result.data)) {
-        _registrations = result.data;
+      if (result.success && result.data) {
+        // Handle nested response: { status: 'ok', registrations: [...] }
+        var regs = [];
+        if (Array.isArray(result.data)) {
+          regs = result.data;
+        } else if (result.data.registrations && Array.isArray(result.data.registrations)) {
+          regs = result.data.registrations;
+        }
+        _registrations = regs;
         _applyCurrentFilters();
         _renderTable();
         _renderStats();
       }
-    }).catch(function () {
-      // Silently handle — user can retry
+    }).catch(function (err) {
+      console.error('[Admin] Failed to load registrations:', err);
     });
   }
 
@@ -117,8 +124,14 @@ var AdminDashboard = (function () {
    *              Intolerancias, Autorización Imagen, Check-in
    */
   function exportCSV() {
-    var data = _filteredRegistrations.length > 0 ? _filteredRegistrations : _registrations;
-    var BOM = '\uFEFF';
+    // Always fetch fresh data before exporting
+    var doExport = function() {
+      var data = _filteredRegistrations.length > 0 ? _filteredRegistrations : _registrations;
+      if (!data || data.length === 0) {
+        alert('No hay datos para exportar. Espera a que carguen los registros.');
+        return;
+      }
+      var BOM = '\uFEFF';
     var headers = [
       'Nombre',
       'Login',
@@ -177,6 +190,16 @@ var AdminDashboard = (function () {
     setTimeout(function () {
       URL.revokeObjectURL(url);
     }, 100);
+    };
+
+    // If registrations are empty, fetch first then export
+    if (!_registrations || _registrations.length === 0) {
+      loadRegistrations().then(function() {
+        doExport();
+      });
+    } else {
+      doExport();
+    }
   }
 
   /**
