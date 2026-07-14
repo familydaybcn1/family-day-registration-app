@@ -160,7 +160,18 @@ var I18n = (function () {
       "error.unexpected": "Respuesta inesperada. Inténtalo de nuevo.",
 
       "lang.toggle": "EN",
-      "lang.current": "ES"
+      "lang.current": "ES",
+
+      "partners.title": "\uD83E\uDD1D Colaboran",
+      "partners.subtitle": "Fundaciones con las que trabajaremos en actividades de voluntariado",
+      "partners.bonaVoluntat.name": "Bona Voluntat en Acci\u00F3",
+      "partners.bonaVoluntat.desc": "Promueve el voluntariado y la educaci\u00F3n no formal, ofreciendo oportunidades para desarrollar capacidades a trav\u00E9s de proyectos sociales y comunitarios.",
+      "partners.roure.name": "Fundaci\u00F3 Roure",
+      "partners.roure.desc": "M\u00E1s de 30 a\u00F1os trabajando en el barrio de Sant Pere, Santa Caterina i la Ribera (Barcelona). Apoyan a personas mayores, familias y personas en situaci\u00F3n de vulnerabilidad. Medalla de Honor de Barcelona 2024.",
+      "partners.acathi.name": "ACATHI",
+      "partners.acathi.desc": "Asociaci\u00F3n por la inclusi\u00F3n de personas LGTBI+ migrantes y refugiadas en Catalunya. Ofrecen acompa\u00F1amiento, formaci\u00F3n y un espacio seguro para la diversidad.",
+      "partners.patasArriba.name": "Patas Para Arriba",
+      "partners.patasArriba.desc": "Fundaci\u00F3n por un v\u00EDnculo sano entre personas y animales. Trabajan en educaci\u00F3n en escuelas, investigaci\u00F3n y apoyo a la adopci\u00F3n responsable en Catalunya."
     },
     en: {
       "app.title": "Family Day 2026",
@@ -311,7 +322,18 @@ var I18n = (function () {
       "error.unexpected": "Unexpected response. Please try again.",
 
       "lang.toggle": "ES",
-      "lang.current": "EN"
+      "lang.current": "EN",
+
+      "partners.title": "\uD83E\uDD1D Partners",
+      "partners.subtitle": "Organizations we'll be working with on volunteering activities",
+      "partners.bonaVoluntat.name": "Bona Voluntat en Acci\u00F3",
+      "partners.bonaVoluntat.desc": "Promotes volunteering and non-formal education, offering opportunities to develop skills through social and community projects.",
+      "partners.roure.name": "Fundaci\u00F3 Roure",
+      "partners.roure.desc": "Over 30 years working in the Sant Pere, Santa Caterina i la Ribera neighborhood (Barcelona). Supporting elderly people, families and vulnerable communities. Barcelona Medal of Honor 2024.",
+      "partners.acathi.name": "ACATHI",
+      "partners.acathi.desc": "Association for the inclusion of LGBTQI+ migrants and refugees in Catalonia. They offer support, training and a safe space for cultural and affective diversity.",
+      "partners.patasArriba.name": "Patas Para Arriba",
+      "partners.patasArriba.desc": "Foundation for a healthy bond between people and animals. They work on education in schools, research, and support for responsible adoption in Catalonia."
     }
   };
 

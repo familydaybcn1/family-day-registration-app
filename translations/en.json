@@ -146,5 +146,16 @@
   "error.unexpected": "Unexpected response. Please try again.",
 
   "lang.toggle": "ES",
-  "lang.current": "EN"
+  "lang.current": "EN",
+
+  "partners.title": "🤝 Partners",
+  "partners.subtitle": "Organizations we'll be working with on volunteering activities",
+  "partners.bonaVoluntat.name": "Bona Voluntat en Acció",
+  "partners.bonaVoluntat.desc": "Promotes volunteering and non-formal education, offering opportunities to develop skills through social and community projects.",
+  "partners.roure.name": "Fundació Roure",
+  "partners.roure.desc": "Over 30 years working in the Sant Pere, Santa Caterina i la Ribera neighborhood (Barcelona). Supporting elderly people, families and vulnerable communities. Barcelona Medal of Honor 2024.",
+  "partners.acathi.name": "ACATHI",
+  "partners.acathi.desc": "Association for the inclusion of LGBTQI+ migrants and refugees in Catalonia. They offer support, training and a safe space for cultural and affective diversity.",
+  "partners.patasArriba.name": "Patas Para Arriba",
+  "partners.patasArriba.desc": "Foundation for a healthy bond between people and animals. They work on education in schools, research, and support for responsible adoption in Catalonia."
 }

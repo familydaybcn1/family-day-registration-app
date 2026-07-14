@@ -1300,6 +1300,14 @@ a.btn {
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.partners-grid__desc {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: block;
 }
 
 @media (min-width: 768px) {

@@ -111,13 +111,13 @@ var LandingPage = (function () {
 
         '<!-- Colaboran (NGO Partners) -->' +
         '<div class="card mb-lg">' +
-          '<h2 class="card__title text-center">\uD83E\uDD1D Colaboran</h2>' +
-          '<p class="text-center mb-md" style="color:var(--text-secondary)">Fundaciones con las que trabajaremos en actividades de voluntariado</p>' +
+          '<h2 class="card__title text-center" data-i18n="partners.title">' + I18n.t('partners.title') + '</h2>' +
+          '<p class="text-center mb-md" style="color:var(--text-secondary)" data-i18n="partners.subtitle">' + I18n.t('partners.subtitle') + '</p>' +
           '<div class="partners-grid">' +
-            '<div class="partners-grid__item"><img src="assets/bona-voluntat.png" alt="Bona Voluntat en Acció" class="partners-grid__logo"><span class="partners-grid__name">Bona Voluntat en Acci\u00F3</span></div>' +
-            '<div class="partners-grid__item"><img src="assets/fundacion-roure.png" alt="Fundació Roure" class="partners-grid__logo"><span class="partners-grid__name">Fundaci\u00F3 Roure</span></div>' +
-            '<div class="partners-grid__item"><img src="assets/acathi.png" alt="ACATHI" class="partners-grid__logo"><span class="partners-grid__name">ACATHI</span></div>' +
-            '<div class="partners-grid__item"><img src="assets/patas-para-arriba.png" alt="Patas Para Arriba" class="partners-grid__logo"><span class="partners-grid__name">Patas Para Arriba</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/bona-voluntat.png" alt="Bona Voluntat en Acció" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.bonaVoluntat.name">' + I18n.t('partners.bonaVoluntat.name') + '</span><span class="partners-grid__desc" data-i18n="partners.bonaVoluntat.desc">' + I18n.t('partners.bonaVoluntat.desc') + '</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/fundacion-roure.png" alt="Fundació Roure" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.roure.name">' + I18n.t('partners.roure.name') + '</span><span class="partners-grid__desc" data-i18n="partners.roure.desc">' + I18n.t('partners.roure.desc') + '</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/acathi.png" alt="ACATHI" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.acathi.name">' + I18n.t('partners.acathi.name') + '</span><span class="partners-grid__desc" data-i18n="partners.acathi.desc">' + I18n.t('partners.acathi.desc') + '</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/patas-para-arriba.png" alt="Patas Para Arriba" class="partners-grid__logo"><span class="partners-grid__name" data-i18n="partners.patasArriba.name">' + I18n.t('partners.patasArriba.name') + '</span><span class="partners-grid__desc" data-i18n="partners.patasArriba.desc">' + I18n.t('partners.patasArriba.desc') + '</span></div>' +
           '</div>' +
         '</div>' +
 

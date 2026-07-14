@@ -146,5 +146,16 @@
   "error.unexpected": "Respuesta inesperada. Inténtalo de nuevo.",
 
   "lang.toggle": "EN",
-  "lang.current": "ES"
+  "lang.current": "ES",
+
+  "partners.title": "🤝 Colaboran",
+  "partners.subtitle": "Fundaciones con las que trabajaremos en actividades de voluntariado",
+  "partners.bonaVoluntat.name": "Bona Voluntat en Acció",
+  "partners.bonaVoluntat.desc": "Promueve el voluntariado y la educación no formal, ofreciendo oportunidades para desarrollar capacidades a través de proyectos sociales y comunitarios.",
+  "partners.roure.name": "Fundació Roure",
+  "partners.roure.desc": "Más de 30 años trabajando en el barrio de Sant Pere, Santa Caterina i la Ribera (Barcelona). Apoyan a personas mayores, familias y personas en situación de vulnerabilidad. Medalla de Honor de Barcelona 2024.",
+  "partners.acathi.name": "ACATHI",
+  "partners.acathi.desc": "Asociación por la inclusión de personas LGTBI+ migrantes y refugiadas en Catalunya. Ofrecen acompañamiento, formación y un espacio seguro para la diversidad.",
+  "partners.patasArriba.name": "Patas Para Arriba",
+  "partners.patasArriba.desc": "Fundación por un vínculo sano entre personas y animales. Trabajan en educación en escuelas, investigación y apoyo a la adopción responsable en Catalunya."
 }
