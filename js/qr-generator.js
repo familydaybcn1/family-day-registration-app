@@ -104,89 +104,90 @@ var QRGenerator = (function () {
     var imageAuth = '';
     try {
       imageAuth = sessionStorage.getItem('registration_imageAuth') || '';
-    } catch (e) {
-      // sessionStorage may be unavailable
-    }
+    } catch (e) {}
 
-    // Determine left border color based on authorization
+    // Color code: green = authorized, red = not authorized
     var borderColor = (imageAuth === 'authorize') ? '#1B8B00' : '#D32F2F';
+    var accentBg = (imageAuth === 'authorize') ? '#E8F5E9' : '#FFEBEE';
 
-    // Build the ticket HTML
+    // Build the ticket
     var ticketWrapper = document.createElement('div');
     ticketWrapper.style.padding = '1rem 0';
 
     var ticket = document.createElement('div');
     ticket.className = 'ticket';
-    ticket.style.borderLeft = '8px solid ' + borderColor;
+    ticket.style.borderLeft = '10px solid ' + borderColor;
+    ticket.style.borderRight = '10px solid ' + borderColor;
 
-    // --- Header ---
+    // --- Header with branding ---
     var header = document.createElement('div');
     header.className = 'ticket__header';
-    header.style.backgroundColor = '#232F3E';
-    var headerTitle = document.createElement('h2');
-    headerTitle.textContent = '🎉 FAMILY DAY 2026';
-    headerTitle.style.color = '#FF9900';
-    headerTitle.style.fontSize = '1.6rem';
-    headerTitle.style.fontWeight = '800';
-    var headerSubtitle = document.createElement('p');
-    headerSubtitle.textContent = 'Amazon BCN1';
-    header.appendChild(headerTitle);
-    header.appendChild(headerSubtitle);
+    header.style.cssText = 'background-color:#232F3E;padding:2rem 1.5rem;text-align:center;';
+    header.innerHTML = '' +
+      '<p style="font-size:0.8rem;color:#FF9900;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;">AMAZON BCN1 PRESENTA</p>' +
+      '<h2 style="font-size:1.8rem;font-weight:900;color:#FFFFFF;margin-bottom:0.25rem;">🎉 FAMILY DAY 2026 🎉</h2>' +
+      '<p style="font-size:1rem;color:rgba(255,255,255,0.8);">19 de septiembre • El Prat de Llobregat</p>';
     ticket.appendChild(header);
 
-    // --- Body ---
+    // --- Motivational banner ---
+    var banner = document.createElement('div');
+    banner.style.cssText = 'background-color:' + accentBg + ';padding:0.75rem;text-align:center;font-weight:700;font-size:1rem;color:#232F3E;';
+    banner.textContent = '🎊 ¡Vamos a disfrutar en familia! 🎊';
+    ticket.appendChild(banner);
+
+    // --- Body with info + QR ---
     var body = document.createElement('div');
     body.className = 'ticket__body';
+    body.style.cssText = 'padding:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center;';
 
     // Info section
     var info = document.createElement('div');
     info.className = 'ticket__info';
+    info.style.cssText = 'flex:1;min-width:200px;';
 
-    // Peccy image
-    var peccy = document.createElement('img');
-    peccy.src = 'assets/peccy.png';
-    peccy.className = 'ticket__peccy';
-    peccy.alt = 'Peccy mascot';
-    info.appendChild(peccy);
-
-    // Login
-    var loginP = document.createElement('p');
-    loginP.innerHTML = '<strong>Login:</strong> ' + login;
-    info.appendChild(loginP);
-
-    // Companions
-    var companionsLabel = (typeof I18n !== 'undefined') ? I18n.t('success.companionsLabel') : 'Acompañantes';
-    var companionsP = document.createElement('p');
-    companionsP.innerHTML = '<strong>' + companionsLabel + ':</strong> ' + String(companions);
-    info.appendChild(companionsP);
-
-    // Date & time
-    var dateP = document.createElement('p');
-    dateP.textContent = '📅 19 sept 2026 • ⏰ 09:30 – 14:00';
-    info.appendChild(dateP);
-
-    // Location
-    var locationP = document.createElement('p');
-    locationP.textContent = '📍 Amazon BCN1, El Prat de Llobregat';
-    info.appendChild(locationP);
+    // Peccy
+    info.innerHTML = '' +
+      '<img src="assets/peccy.png" style="width:70px;height:auto;margin-bottom:0.75rem;" alt="Peccy">' +
+      '<p style="margin-bottom:0.5rem;font-size:0.95rem;"><strong>👤 Login:</strong> ' + login + '</p>' +
+      '<p style="margin-bottom:0.5rem;font-size:0.95rem;"><strong>👥 Acompañantes:</strong> ' + companions + '</p>' +
+      '<p style="margin-bottom:0.5rem;font-size:0.95rem;"><strong>📅 Fecha:</strong> 19 sept 2026</p>' +
+      '<p style="margin-bottom:0.5rem;font-size:0.95rem;"><strong>⏰ Horario:</strong> 09:30 – 14:00</p>' +
+      '<p style="margin-bottom:0.5rem;font-size:0.95rem;"><strong>📍 Lugar:</strong> Amazon BCN1</p>';
 
     body.appendChild(info);
 
     // QR section
     var qrSection = document.createElement('div');
     qrSection.className = 'ticket__qr';
+    qrSection.style.textAlign = 'center';
     var qrElement = generate(login, companions);
     qrSection.appendChild(qrElement);
+    var qrLabel = document.createElement('p');
+    qrLabel.style.cssText = 'font-size:0.7rem;color:#565959;margin-top:0.5rem;';
+    qrLabel.textContent = 'Muestra este QR en la entrada';
+    qrSection.appendChild(qrLabel);
     body.appendChild(qrSection);
 
     ticket.appendChild(body);
 
+    // --- Activities teaser ---
+    var activities = document.createElement('div');
+    activities.style.cssText = 'padding:0.75rem 1.5rem;text-align:center;background-color:#F8F9FA;border-top:1px solid #E0E0E0;';
+    activities.innerHTML = '<p style="font-size:0.85rem;color:#565959;">👶 Zona bebés • 🎭 Espectáculos • 🏆 Concursos • 🍕 Gastronomía • 🔧 Talleres • 🤝 Voluntariado</p>';
+    ticket.appendChild(activities);
+
     // --- Footer ---
     var footer = document.createElement('div');
     footer.className = 'ticket__footer';
-    var footerMsg = (typeof I18n !== 'undefined') ? I18n.t('success.ticketFooter') : '¡Os esperamos con toda la familia! 🎊';
-    footer.textContent = footerMsg;
+    footer.style.cssText = 'background-color:#FFF8E1;padding:1rem;text-align:center;font-weight:700;color:#232F3E;font-size:0.95rem;';
+    footer.textContent = '¡Os esperamos con toda la familia! 🎊 — Amazon BCN1';
     ticket.appendChild(footer);
+
+    // --- Badge reminder ---
+    var reminder = document.createElement('div');
+    reminder.style.cssText = 'padding:0.5rem 1rem;text-align:center;background-color:#232F3E;color:#FF9900;font-size:0.75rem;border-radius:0 0 16px 16px;';
+    reminder.textContent = '⚠️ Recuerda llevar tu badge de Amazon para acceder al evento';
+    ticket.appendChild(reminder);
 
     ticketWrapper.appendChild(ticket);
     container.appendChild(ticketWrapper);
