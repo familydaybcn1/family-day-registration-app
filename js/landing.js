@@ -114,10 +114,10 @@ var LandingPage = (function () {
           '<h2 class="card__title text-center">\uD83E\uDD1D Colaboran</h2>' +
           '<p class="text-center mb-md" style="color:var(--text-secondary)">Fundaciones con las que trabajaremos en actividades de voluntariado</p>' +
           '<div class="partners-grid">' +
-            '<div class="partners-grid__item"><span class="partners-grid__name">Bona Voluntat en Acci\u00F3</span></div>' +
-            '<div class="partners-grid__item"><span class="partners-grid__name">Fundaci\u00F3 Roure</span></div>' +
-            '<div class="partners-grid__item"><span class="partners-grid__name">ACATHI</span></div>' +
-            '<div class="partners-grid__item"><span class="partners-grid__name">Patas Para Arriba</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/bona-voluntat.png" alt="Bona Voluntat en Acció" class="partners-grid__logo"><span class="partners-grid__name">Bona Voluntat en Acci\u00F3</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/fundacion-roure.png" alt="Fundació Roure" class="partners-grid__logo"><span class="partners-grid__name">Fundaci\u00F3 Roure</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/acathi.png" alt="ACATHI" class="partners-grid__logo"><span class="partners-grid__name">ACATHI</span></div>' +
+            '<div class="partners-grid__item"><img src="assets/patas-para-arriba.png" alt="Patas Para Arriba" class="partners-grid__logo"><span class="partners-grid__name">Patas Para Arriba</span></div>' +
           '</div>' +
         '</div>' +
 

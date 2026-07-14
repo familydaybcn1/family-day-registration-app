@@ -1260,3 +1260,55 @@ a.btn {
 .modal__close:hover {
   background-color: var(--border);
 }
+
+
+/* --------------------------------------------------------------------------
+   23. Partners / NGO Grid
+   -------------------------------------------------------------------------- */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.partners-grid__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.partners-grid__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow-md);
+}
+
+.partners-grid__logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: var(--space-sm);
+  border-radius: var(--radius-md);
+}
+
+.partners-grid__name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+@media (min-width: 768px) {
+  .partners-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .partners-grid__logo {
+    width: 100px;
+    height: 100px;
+  }
+}
