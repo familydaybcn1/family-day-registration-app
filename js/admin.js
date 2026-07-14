@@ -232,10 +232,11 @@ var AdminDashboard = (function () {
     html += '<button type="button" id="stop-scanner-btn" class="btn btn--outline hidden">' + I18n.t('admin.scanner.stop') + '</button>';
     html += '</div>';
 
-    // QR Scanner container
-    html += '<div class="card mb-lg hidden" id="scanner-section">';
-    html += '<h2 class="card__title">' + I18n.t('admin.scanner.title') + '</h2>';
-    html += '<div id="qr-scanner-container" style="width:100%;max-width:400px;margin:0 auto;"></div>';
+    // QR Scanner / Gun check-in section (visible by default for event day)
+    html += '<div class="card mb-lg" id="scanner-section" style="border:3px solid var(--success);background:linear-gradient(135deg,#E8F5E9,#FFFFFF);">';
+    html += '<h2 class="card__title" style="color:var(--success);">🔫 Check-in Rápido</h2>';
+    html += '<p style="margin-bottom:1rem;color:var(--text-secondary);">Apunta la pistola al QR del asistente. El check-in se hace automáticamente.</p>';
+    html += '<div id="qr-scanner-container" style="width:100%;max-width:500px;margin:0 auto;"></div>';
     html += '</div>';
 
     // Registrations table
@@ -247,6 +248,12 @@ var AdminDashboard = (function () {
 
     // Wire up event listeners
     _wireEvents();
+
+    // Initialize gun scanner input immediately
+    if (typeof QRScanner !== 'undefined') {
+      QRScanner.init('qr-scanner-container');
+      QRScanner.showManualInput();
+    }
   }
 
   /**

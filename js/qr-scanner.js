@@ -209,6 +209,7 @@ var QRScanner = (function () {
 
   /**
    * Show the manual input fallback when camera is unavailable.
+   * Also works with barcode gun scanners (they type text + Enter).
    * Renders a text input + button for manual login entry.
    * @param {string} errorMessage - Camera error message to display
    * @private
@@ -218,41 +219,71 @@ var QRScanner = (function () {
     if (!container) return;
 
     var html = '';
-    html += '<div class="alert alert--warning mb-md" role="alert">';
-    html += '<p>' + errorMessage + '</p>';
-    html += '</div>';
+    if (errorMessage && errorMessage !== I18n.t('admin.scanner.manual')) {
+      html += '<div class="alert alert--warning mb-md" role="alert">';
+      html += '<p>' + errorMessage + '</p>';
+      html += '</div>';
+    }
     html += '<div class="form-group">';
-    html += '<label class="form-group__label" for="manual-login-input">' + I18n.t('admin.scanner.manual') + '</label>';
+    html += '<label class="form-group__label" for="manual-login-input" style="font-size:1.1rem;font-weight:700;">🔫 Escanea con la pistola o escribe el login</label>';
     html += '<div style="display:flex;gap:var(--space-sm);align-items:center;">';
-    html += '<input type="text" id="manual-login-input" class="input" placeholder="' + I18n.t('admin.scanner.manualPlaceholder') + '" aria-label="' + I18n.t('admin.scanner.manualPlaceholder') + '">';
-    html += '<button type="button" id="manual-checkin-btn" class="btn btn--primary">' + I18n.t('admin.scanner.checkIn') + '</button>';
+    html += '<input type="text" id="manual-login-input" class="input" style="font-size:1.2rem;padding:1rem;" placeholder="Apunta la pistola aquí..." aria-label="Escanear QR" autofocus>';
+    html += '<button type="button" id="manual-checkin-btn" class="btn btn--primary" style="padding:1rem 1.5rem;">✓ Check-in</button>';
     html += '</div>';
+    html += '<div id="gun-scanner-message" style="margin-top:1rem;"></div>';
     html += '</div>';
 
     container.innerHTML = html;
 
-    // Wire up manual check-in button
+    // Wire up manual check-in button and barcode gun support
     var btn = document.getElementById('manual-checkin-btn');
     var input = document.getElementById('manual-login-input');
     if (btn && input) {
+      // Focus the input immediately for gun scanning
+      input.focus();
+
       btn.addEventListener('click', function () {
-        var login = input.value.trim();
-        if (login) {
-          _performCheckIn(login);
-          input.value = '';
-        }
+        _processInput(input);
       });
-      // Also support Enter key
+
+      // Enter key = gun finished scanning OR user pressed enter
       input.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
-          var login = input.value.trim();
-          if (login) {
-            _performCheckIn(login);
-            input.value = '';
-          }
+          e.preventDefault();
+          _processInput(input);
         }
       });
     }
+  }
+
+  /**
+   * Process the input value — handles both raw login and full QR payload.
+   * Extracts login from QR format "FAMILYDAY2026|login|companions" or uses raw text as login.
+   * After processing, clears the field and refocuses for next scan.
+   * @param {HTMLInputElement} input
+   * @private
+   */
+  function _processInput(input) {
+    var value = input.value.trim();
+    if (!value) return;
+
+    var login = value;
+
+    // Check if it's a full QR payload: FAMILYDAY2026|login|companions
+    if (value.indexOf('FAMILYDAY2026|') === 0) {
+      var parts = value.split('|');
+      if (parts.length >= 2) {
+        login = parts[1];
+      }
+    }
+
+    if (login) {
+      _performCheckIn(login);
+    }
+
+    // Clear and refocus for next scan
+    input.value = '';
+    input.focus();
   }
 
   /**
