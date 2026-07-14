@@ -137,10 +137,43 @@ body {
   font-size: var(--font-size-base);
   line-height: 1.6;
   color: var(--text-primary);
-  background-color: var(--bg);
+  background-color: #EEF4FA;
+  background-image:
+    url('../assets/peccy-1.png'),
+    url('../assets/peccy-2.png'),
+    url('../assets/peccy-3.png'),
+    url('../assets/peccy-4.png'),
+    url('../assets/peccy.png');
+  background-position:
+    5% 15%,
+    92% 8%,
+    8% 55%,
+    88% 45%,
+    50% 85%;
+  background-size:
+    60px auto,
+    55px auto,
+    50px auto,
+    65px auto,
+    45px auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(238, 244, 250, 0.85) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(238, 244, 250, 0.85) 100%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 img {
