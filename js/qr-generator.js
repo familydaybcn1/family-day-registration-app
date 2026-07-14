@@ -68,9 +68,13 @@ var QRGenerator = (function () {
     }
 
     html2canvas(ticketElement, {
-      scale: 2,
+      scale: 3,
       useCORS: true,
-      backgroundColor: '#FFFFFF'
+      backgroundColor: '#FFFFFF',
+      logging: false,
+      allowTaint: true,
+      width: ticketElement.offsetWidth,
+      height: ticketElement.offsetHeight
     }).then(function (canvas) {
       var dataURL = canvas.toDataURL('image/png');
       var link = document.createElement('a');
@@ -118,8 +122,12 @@ var QRGenerator = (function () {
     // --- Header ---
     var header = document.createElement('div');
     header.className = 'ticket__header';
+    header.style.backgroundColor = '#232F3E';
     var headerTitle = document.createElement('h2');
     headerTitle.textContent = '🎉 FAMILY DAY 2026';
+    headerTitle.style.color = '#FF9900';
+    headerTitle.style.fontSize = '1.6rem';
+    headerTitle.style.fontWeight = '800';
     var headerSubtitle = document.createElement('p');
     headerSubtitle.textContent = 'Amazon BCN1';
     header.appendChild(headerTitle);
