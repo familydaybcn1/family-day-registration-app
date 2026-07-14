@@ -92,7 +92,7 @@ var LandingPage = (function () {
             '</div>' +
           '</div>' +
           '<div class="event-details__peccy">' +
-            '<img src="assets/Announce Peccy 2.png" alt="Peccy" class="peccy-img" onerror="this.style.display=\'none\'">' +
+            '<img src="assets/peccy.png" alt="Peccy" class="peccy-img" onerror="this.style.display=\'none\'">' +
           '</div>' +
         '</div>' +
 
@@ -355,6 +355,40 @@ var LandingPage = (function () {
       clearInterval(countdownInterval);
       countdownInterval = null;
     }
+  }
+
+  /**
+   * Show a modal popup when an activity is clicked.
+   * @param {string} emoji - The activity emoji
+   * @param {string} name - The activity name
+   */
+  function showActivityModal(emoji, name) {
+    // Remove existing modal if any
+    var existing = document.getElementById('activity-modal');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.id = 'activity-modal';
+    modal.className = 'modal';
+    modal.innerHTML = '' +
+      '<div class="modal__backdrop"></div>' +
+      '<div class="modal__content">' +
+        '<button class="modal__close" aria-label="Cerrar">&times;</button>' +
+        '<div style="font-size:3rem;text-align:center;margin-bottom:1rem;">' + emoji + '</div>' +
+        '<h3 style="text-align:center;font-size:1.25rem;font-weight:700;margin-bottom:0.75rem;">' + name + '</h3>' +
+        '<p style="text-align:center;color:var(--primary);font-weight:600;font-size:1.1rem;">🔜 Más detalles próximamente</p>' +
+        '<p style="text-align:center;color:var(--text-secondary);margin-top:0.5rem;">¡Se irán actualizando, estén atentos! 🎉</p>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    // Close handlers
+    modal.querySelector('.modal__close').addEventListener('click', function () {
+      modal.remove();
+    });
+    modal.querySelector('.modal__backdrop').addEventListener('click', function () {
+      modal.remove();
+    });
   }
 
   // Public API

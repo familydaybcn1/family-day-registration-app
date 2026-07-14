@@ -1200,3 +1200,63 @@ a.btn {
     font-size: 18px;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   22. Modal (Activity popups)
+   -------------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  animation: fadeInUp 0.2s ease-out;
+}
+
+.modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal__content {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+}
+
+.modal__close:hover {
+  background-color: var(--border);
+}
