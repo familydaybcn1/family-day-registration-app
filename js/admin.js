@@ -128,7 +128,8 @@ var AdminDashboard = (function () {
       'Menores',
       'Intolerancias',
       'Autorización Imagen',
-      'Check-in'
+      'Check-in',
+      'Fecha Check-in'
     ];
 
     var rows = [headers.join(',')];
@@ -142,6 +143,9 @@ var AdminDashboard = (function () {
         dietaryInfo = options + (details ? ' - ' + details : '');
       }
 
+      // Normalize checkedIn to boolean (backend may send string "true"/"TRUE")
+      var isCheckedIn = reg.checkedIn === true || reg.checkedIn === 'true' || reg.checkedIn === 'TRUE';
+
       var row = [
         _csvEscape(reg.fullName || ''),
         _csvEscape(reg.login || ''),
@@ -151,7 +155,8 @@ var AdminDashboard = (function () {
         reg.minorCount != null ? reg.minorCount : 0,
         _csvEscape(dietaryInfo),
         _csvEscape(reg.imageAuthorization === 'authorize' ? 'Sí' : 'No'),
-        _csvEscape(reg.checkedIn ? 'Sí' : 'No')
+        _csvEscape(isCheckedIn ? 'Sí' : 'No'),
+        _csvEscape(reg.checkedInTimestamp || '')
       ];
       rows.push(row.join(','));
     }

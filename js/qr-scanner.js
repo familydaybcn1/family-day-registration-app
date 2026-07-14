@@ -126,22 +126,28 @@ var QRScanner = (function () {
   /**
    * Perform the check-in API call for a given login.
    * Handles success, not-found, and already-checked-in responses.
+   * Backend returns { status: 'ok' } on success, { status: 'error', message: 'Already checked in' } on duplicate.
+   * API layer wraps this as { success: true, data: { status: '...' } } for 200 OK responses.
    * @param {string} login - Corporate login to check in
    * @private
    */
   function _performCheckIn(login) {
     if (typeof API === 'undefined' || !API.checkIn) {
-      _showScanMessage(I18n.t('common.error'), 'error');
+      _showScanMessage('❌ NO REGISTRADO — Error de sistema', 'error');
       return;
     }
 
     API.checkIn(login).then(function (result) {
       if (result.success) {
         var data = result.data || {};
-        if (data.status === 'already_checked_in') {
-          _showScanMessage(I18n.t('admin.scanner.alreadyCheckedIn'), 'warning');
-        } else {
-          _showScanMessage(I18n.t('admin.scanner.success'), 'success');
+
+        // Backend returns status='error' + message='Already checked in' for duplicates
+        if (data.status === 'error' && data.message && data.message.indexOf('Already') !== -1) {
+          _showScanMessage('⚠️ YA ENTRÓ — esta persona ya hizo check-in', 'warning');
+        } else if (data.status === 'ok') {
+          // Successful check-in
+          var personInfo = data.login ? ' (' + data.login + ')' : '';
+          _showScanMessage('✓ PUEDE PASAR' + personInfo, 'success');
           // Dispatch event so AdminDashboard can refresh its list
           var event;
           try {
@@ -151,20 +157,18 @@ var QRScanner = (function () {
             event.initCustomEvent('checkInCompleted', true, true, { login: login });
           }
           document.dispatchEvent(event);
+        } else if (data.status === 'error' && data.message && data.message.indexOf('not found') !== -1) {
+          _showScanMessage('❌ NO REGISTRADO — login no encontrado', 'error');
+        } else {
+          // Unknown status from backend
+          _showScanMessage('❌ NO REGISTRADO — respuesta inesperada', 'error');
         }
       } else {
-        // Determine error type from response
-        var errorData = result.data || {};
-        if (errorData.status === 'not_found' || result.error === 'not_found') {
-          _showScanMessage(I18n.t('admin.scanner.notFound'), 'error');
-        } else if (errorData.status === 'already_checked_in') {
-          _showScanMessage(I18n.t('admin.scanner.alreadyCheckedIn'), 'warning');
-        } else {
-          _showScanMessage(I18n.t('admin.scanner.notFound'), 'error');
-        }
+        // HTTP-level failure (network error, 5xx, etc.)
+        _showScanMessage('❌ NO REGISTRADO — error de conexión', 'error');
       }
     }).catch(function () {
-      _showScanMessage(I18n.t('common.error'), 'error');
+      _showScanMessage('❌ NO REGISTRADO — error de conexión', 'error');
     });
   }
 
