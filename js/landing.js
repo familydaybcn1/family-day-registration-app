@@ -92,7 +92,7 @@ var LandingPage = (function () {
             '</div>' +
           '</div>' +
           '<div class="event-details__peccy">' +
-            '<img src="assets/peccy.png" alt="Peccy" class="peccy-img" onerror="this.style.display=\'none\'">' +
+            '<img src="assets/Announce Peccy 2.png" alt="Peccy" class="peccy-img" onerror="this.style.display=\'none\'">' +
           '</div>' +
         '</div>' +
 
