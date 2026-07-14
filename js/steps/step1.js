@@ -20,16 +20,21 @@ var Step1 = (function () {
     'Customer Service',
     'Finance',
     'HR/PXT',
+    'IB',
+    'ICQA',
     'IT',
     'Legal',
     'Loss Prevention',
+    'OB',
     'Ops Engineering',
     'Operations',
     'Procurement',
     'Programs',
     'RME',
     'Safety',
-    'Transportation'
+    'SUPPORT',
+    'Transportation',
+    'UES4'
   ];
 
   /**
