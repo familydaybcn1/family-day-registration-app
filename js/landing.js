@@ -202,7 +202,7 @@ var LandingPage = (function () {
       });
     }
 
-    // Activity items — "coming soon" modal (except Volunteering)
+    // Activity items — specific content modal (except Volunteering)
     var activityItems = document.querySelectorAll('.activities-grid__item');
     activityItems.forEach(function (item) {
       item.style.cursor = 'pointer';
@@ -213,7 +213,7 @@ var LandingPage = (function () {
         if (i18nKey === 'landing.activities.volunteering') {
           showVolunteeringModal();
         } else {
-          showActivityModal(emoji, name);
+          showActivityModal(emoji, name, i18nKey);
         }
       });
       item.addEventListener('keydown', function (e) {
@@ -351,14 +351,17 @@ var LandingPage = (function () {
   }
 
   /**
-   * Show a modal popup when an activity is clicked.
+   * Show a modal popup when an activity is clicked with specific content per activity.
    * @param {string} emoji - The activity emoji
    * @param {string} name - The activity name
+   * @param {string} i18nKey - The i18n key identifying the activity
    */
-  function showActivityModal(emoji, name) {
+  function showActivityModal(emoji, name, i18nKey) {
     // Remove existing modal if any
     var existing = document.getElementById('activity-modal');
     if (existing) existing.remove();
+
+    var contentHtml = getActivityContent(i18nKey);
 
     var modal = document.createElement('div');
     modal.id = 'activity-modal';
@@ -367,10 +370,9 @@ var LandingPage = (function () {
       '<div class="modal__backdrop"></div>' +
       '<div class="modal__content">' +
         '<button class="modal__close" aria-label="Cerrar">&times;</button>' +
-        '<div style="font-size:3rem;text-align:center;margin-bottom:1rem;">' + emoji + '</div>' +
-        '<h3 style="text-align:center;font-size:1.25rem;font-weight:700;margin-bottom:0.75rem;">' + name + '</h3>' +
-        '<p style="text-align:center;color:var(--primary);font-weight:600;font-size:1.1rem;">🔜 Más detalles próximamente</p>' +
-        '<p style="text-align:center;color:var(--text-secondary);margin-top:0.5rem;">¡Se irán actualizando, estén atentos! 🎉</p>' +
+        '<div style="font-size:3.5rem;text-align:center;margin-bottom:0.75rem;">' + emoji + '</div>' +
+        '<h3 style="text-align:center;font-size:1.4rem;font-weight:800;margin-bottom:1rem;color:var(--primary);">' + name + '</h3>' +
+        '<div style="text-align:left;line-height:1.6;">' + contentHtml + '</div>' +
       '</div>';
 
     document.body.appendChild(modal);
@@ -382,6 +384,77 @@ var LandingPage = (function () {
     modal.querySelector('.modal__backdrop').addEventListener('click', function () {
       modal.remove();
     });
+  }
+
+  /**
+   * Get the specific HTML content for each activity based on its i18n key.
+   * @param {string} i18nKey - The i18n key identifying the activity
+   * @returns {string} HTML content for the modal
+   */
+  function getActivityContent(i18nKey) {
+    var content = '';
+
+    switch (i18nKey) {
+      case 'landing.activities.workshops':
+        content = '' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🎨 Zona Creativa</h4>' +
+          '<ul style="list-style:none;padding:0;margin:0 0 1rem 0;">' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Facepainting con maquilladoras profesionales</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Espacio de pintura infantil — ¡a crear y disfrutar!</li>' +
+          '</ul>' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🎮 Zona Dinámica</h4>' +
+          '<ul style="list-style:none;padding:0;margin:0;">' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Pulsadores hinchables (¡el que más participa gana!)</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Camellos personalizados Amazon</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Juegos rápidos para todas las edades</li>' +
+          '</ul>';
+        break;
+
+      case 'landing.activities.babies':
+        content = '' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">👶 Espacio blandito y seguro</h4>' +
+          '<ul style="list-style:none;padding:0;margin:0;">' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Zona acolchada para los más pequeños</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Piscina de bolas o zona sensorial con texturas</li>' +
+          '</ul>';
+        break;
+
+      case 'landing.activities.shows':
+        content = '' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🎭 Mini Escenario</h4>' +
+          '<ul style="list-style:none;padding:0;margin:0;">' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Cantajuegos en vivo</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Show de globoflexia</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Espectáculo de magia</li>' +
+          '</ul>';
+        break;
+
+      case 'landing.activities.contests':
+        content = '' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🏆 Gran Concurso Final</h4>' +
+          '<ul style="list-style:none;padding:0;margin:0;">' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Concurso tipo TV con pulsadores + pantalla + presentador</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Familias compiten juntas (preguntas para niños y adultos)</li>' +
+          '</ul>';
+        break;
+
+      case 'landing.activities.food':
+        content = '' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🍕 Menú para todos</h4>' +
+          '<ul style="list-style:none;padding:0;margin:0;">' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Disfrutaremos de un menú con cosas ricas para adultos y jóvenes</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> 🍖 La carne servida en el evento será Halal</li>' +
+          '</ul>';
+        break;
+
+      default:
+        content = '' +
+          '<p style="text-align:center;color:var(--primary);font-weight:600;font-size:1.1rem;">🔜 Más detalles próximamente</p>' +
+          '<p style="text-align:center;color:var(--text-secondary);margin-top:0.5rem;">¡Se irán actualizando, estén atentos! 🎉</p>';
+        break;
+    }
+
+    return content;
   }
 
   /**
