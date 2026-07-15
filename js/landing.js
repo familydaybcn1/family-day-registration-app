@@ -420,7 +420,7 @@ var LandingPage = (function () {
 
       case 'landing.activities.food':
         content = '' +
-          '<p style="color:#333;line-height:1.5;">Un men\u00FA pensado para toda la familia. Opciones variadas, sabores para todas las edades y carne Halal.</p>';
+          '<p style="color:#333;line-height:1.5;">Un men\u00FA pensado para toda la familia. Opciones variadas y sabores para todas las edades. \u00A1A disfrutar!</p>';
         break;
 
       default:

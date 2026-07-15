@@ -31,6 +31,12 @@ var Step3 = (function () {
     title.textContent = I18n.t('form.step3.title');
     container.appendChild(title);
 
+    // Halal info note
+    var halalNote = document.createElement('div');
+    halalNote.style.cssText = 'padding:0.75rem;margin-bottom:1rem;background:#E8F5E9;border-radius:8px;font-size:0.85rem;color:#2e7d32;';
+    halalNote.textContent = '\uD83C\uDF3F La carne que se servir\u00E1 en el evento ser\u00E1 Halal.';
+    container.appendChild(halalNote);
+
     // Main question label
     var questionGroup = document.createElement('div');
     questionGroup.className = 'form-group';

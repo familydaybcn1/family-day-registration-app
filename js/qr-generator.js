@@ -62,20 +62,24 @@ var QRGenerator = (function () {
     if (qrCanvas) {
       tempImg = document.createElement('img');
       tempImg.src = qrCanvas.toDataURL('image/png');
-      tempImg.style.width = qrCanvas.style.width || qrCanvas.width + 'px';
-      tempImg.style.height = qrCanvas.style.height || qrCanvas.height + 'px';
+      tempImg.style.width = (qrCanvas.offsetWidth || 200) + 'px';
+      tempImg.style.height = (qrCanvas.offsetHeight || 200) + 'px';
+      tempImg.style.display = 'block';
       qrCanvas.parentNode.replaceChild(tempImg, qrCanvas);
     }
 
-    html2canvas(ticketElement, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: '#FFFFFF',
-      logging: false,
-      allowTaint: true,
-      width: ticketElement.offsetWidth,
-      height: ticketElement.offsetHeight
-    }).then(function (canvas) {
+    // Use lower scale on mobile to avoid memory issues
+    var scale = window.innerWidth < 768 ? 2 : 3;
+
+    // Small delay to ensure img is rendered
+    setTimeout(function() {
+      html2canvas(ticketElement, {
+        scale: scale,
+        useCORS: true,
+        backgroundColor: '#FFFFFF',
+        logging: false,
+        allowTaint: true
+      }).then(function (canvas) {
       var dataURL = canvas.toDataURL('image/png');
       var link = document.createElement('a');
       link.href = dataURL;
@@ -95,6 +99,7 @@ var QRGenerator = (function () {
         tempImg.parentNode.replaceChild(qrCanvas, tempImg);
       }
     });
+    }, 100); // end setTimeout
   }
 
   /**
