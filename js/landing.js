@@ -397,60 +397,36 @@ var LandingPage = (function () {
     switch (i18nKey) {
       case 'landing.activities.workshops':
         content = '' +
-          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🎨 Zona Creativa</h4>' +
-          '<ul style="list-style:none;padding:0;margin:0 0 1rem 0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Facepainting con maquilladoras profesionales</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Espacio de pintura infantil — ¡a crear y disfrutar!</li>' +
-          '</ul>' +
-          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🎮 Zona Dinámica</h4>' +
-          '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Pulsadores hinchables (¡el que más participa gana!)</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Camellos personalizados Amazon</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Juegos rápidos para todas las edades</li>' +
-          '</ul>';
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;">🎨 Zona Creativa</h4>' +
+          '<p style="margin-bottom:1rem;color:#333;line-height:1.5;">Colores, pinceles y creatividad al m\u00E1ximo. Maquillaje art\u00EDstico profesional y un rinc\u00F3n de pintura libre para dejar volar la imaginaci\u00F3n.</p>' +
+          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;">🎮 Zona Din\u00E1mica</h4>' +
+          '<p style="color:#333;line-height:1.5;">Hinchables, camellos personalizados Amazon y juegos r\u00E1pidos donde toda la familia puede participar. \u00BFQui\u00E9n ser\u00E1 m\u00E1s r\u00E1pido?</p>';
         break;
 
       case 'landing.activities.babies':
         content = '' +
-          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">👶 Espacio blandito y seguro</h4>' +
-          '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Zona acolchada para peques</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Piscina de bolas o zona sensorial con texturas</li>' +
-          '</ul>';
+          '<p style="color:#333;line-height:1.5;">Un espacio seguro y blandito pensado para disfrutar sin prisas. Piscina de bolas, texturas y mucha calma para las familias con menores.</p>';
         break;
 
       case 'landing.activities.shows':
         content = '' +
-          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🎭 Mini Escenario</h4>' +
-          '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Cantajuegos en vivo</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Show de globoflexia</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Espectáculo de magia</li>' +
-          '</ul>';
+          '<p style="color:#333;line-height:1.5;">Cantajuegos, globoflexia y magia en vivo. Un mini escenario con sorpresas durante toda la ma\u00F1ana. \u00A1No te lo pierdas!</p>';
         break;
 
       case 'landing.activities.contests':
         content = '' +
-          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🏆 Gran Concurso Final</h4>' +
-          '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Concurso tipo TV con pulsadores + pantalla + presentación en vivo</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Familias compiten juntas (preguntas para todas las edades)</li>' +
-          '</ul>';
+          '<p style="color:#333;line-height:1.5;">\u00BFTe animar\u00EDas a jugar como si estuvieses en un programa de televisi\u00F3n? Pulsadores, pantalla gigante y preguntas para todas las edades. Las familias compiten juntas. \u00A1Un cierre que no olvidar\u00E1s!</p>';
         break;
 
       case 'landing.activities.food':
         content = '' +
-          '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🍕 Menú para todos</h4>' +
-          '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Disfrutaremos de un menú con cosas ricas para todas las edades</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> 🍖 La carne servida en el evento será Halal</li>' +
-          '</ul>';
+          '<p style="color:#333;line-height:1.5;">Un men\u00FA pensado para toda la familia. Opciones variadas, sabores para todas las edades y carne Halal.</p>';
         break;
 
       default:
         content = '' +
-          '<p style="text-align:center;color:var(--primary);font-weight:600;font-size:1.1rem;">🔜 Más detalles próximamente</p>' +
-          '<p style="text-align:center;color:var(--text-secondary);margin-top:0.5rem;">¡Se irán actualizando, estén atentos! 🎉</p>';
+          '<p style="text-align:center;color:var(--primary);font-weight:600;font-size:1.1rem;">\uD83D\uDD1C M\u00E1s detalles pr\u00F3ximamente</p>' +
+          '<p style="text-align:center;color:var(--text-secondary);margin-top:0.5rem;">\u00A1Se ir\u00E1n actualizando, est\u00E9n atentos! \uD83C\uDF89</p>';
         break;
     }
 
