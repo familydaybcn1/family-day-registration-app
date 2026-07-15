@@ -330,8 +330,13 @@
         var route = Router.getCurrentRoute();
         if (route === '#/' || route === '') {
           renderLanding();
+        } else if (route === '#/register') {
+          renderRegister();
+        } else if (route === '#/success') {
+          renderSuccess();
+        } else if (route === '#/admin') {
+          renderAdmin();
         }
-        // Other views will handle their own re-render via I18n.translatePage()
       }
     });
 
