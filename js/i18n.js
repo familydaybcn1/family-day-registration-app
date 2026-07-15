@@ -70,7 +70,7 @@ var I18n = (function () {
       "form.step3.vegetarian": "Vegetariano/a",
       "form.step3.vegan": "Vegano/a",
       "form.step3.details": "Otros / Detalles (indica a quién aplica cada intolerancia)",
-      "form.step3.details.placeholder": "Ej: Peque 2 - celiaqu\u00EDa. Yo - vegetariano/a.",
+      "form.step3.details.placeholder": "Ej: Ni\u00F1o/a 2 - cel\u00EDaco/a. Yo - vegetariana.",
 
       "form.step4.title": "Autorización de Imagen",
       "form.step4.legalHeader": "Autorización de uso de imagen — Ley Orgánica 1/1982, de 5 de mayo, de protección civil del derecho al honor, a la intimidad personal y familiar y a la propia imagen, y Reglamento (UE) 2016/679 (GDPR)",
