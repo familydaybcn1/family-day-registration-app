@@ -414,7 +414,7 @@ var LandingPage = (function () {
         content = '' +
           '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">👶 Espacio blandito y seguro</h4>' +
           '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Zona acolchada para los más pequeños</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Zona acolchada para peques</li>' +
             '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Piscina de bolas o zona sensorial con texturas</li>' +
           '</ul>';
         break;
@@ -433,8 +433,8 @@ var LandingPage = (function () {
         content = '' +
           '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🏆 Gran Concurso Final</h4>' +
           '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Concurso tipo TV con pulsadores + pantalla + presentador</li>' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Familias compiten juntas (preguntas para niños y adultos)</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Concurso tipo TV con pulsadores + pantalla + presentación en vivo</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Familias compiten juntas (preguntas para todas las edades)</li>' +
           '</ul>';
         break;
 
@@ -442,7 +442,7 @@ var LandingPage = (function () {
         content = '' +
           '<h4 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">🍕 Menú para todos</h4>' +
           '<ul style="list-style:none;padding:0;margin:0;">' +
-            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Disfrutaremos de un menú con cosas ricas para adultos y jóvenes</li>' +
+            '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> Disfrutaremos de un menú con cosas ricas para todas las edades</li>' +
             '<li style="padding:0.25rem 0;padding-left:1.2rem;position:relative;"><span style="position:absolute;left:0;">•</span> 🍖 La carne servida en el evento será Halal</li>' +
           '</ul>';
         break;
