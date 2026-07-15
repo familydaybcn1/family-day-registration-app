@@ -86,7 +86,7 @@ var LandingPage = (function () {
             '<div class="event-details__icon">📍</div>' +
             '<div class="event-details__info">' +
               '<p class="event-details__location" data-i18n="landing.event.location">' + I18n.t('landing.event.location') + '</p>' +
-              '<a href="https://maps.google.com/?q=Amazon+BCN1+El+Prat+de+Llobregat" target="_blank" rel="noopener noreferrer" class="btn btn--outline mt-sm" style="display:inline-flex;gap:0.5rem;">' +
+              '<a href="https://maps.google.com/?q=Av+de+les+Garrigues+2-12+El+Prat+de+Llobregat" target="_blank" rel="noopener noreferrer" class="btn btn--outline mt-sm" style="display:inline-flex;gap:0.5rem;">' +
                 '🗺️ <span data-i18n="landing.event.mapLink">' + I18n.t('landing.event.mapLink') + '</span>' +
               '</a>' +
             '</div>' +
