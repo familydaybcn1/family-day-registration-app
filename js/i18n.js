@@ -55,7 +55,7 @@ var I18n = (function () {
       "form.step2.companionCount.placeholder": "Selecciona",
       "form.step2.minorCount": "¿Cuántos son menores de edad?",
       "form.step2.minorCount.placeholder": "Selecciona",
-      "form.step2.companion0": "0 — Asistiré solo/a",
+      "form.step2.companion0": "0 \u2014 Asistiré sin acompa\u00F1antes",
       "form.step2.companion1": "1 acompañante",
       "form.step2.companion2": "2 acompañantes",
       "form.step2.companion3": "3 acompañantes",
@@ -67,8 +67,8 @@ var I18n = (function () {
       "form.step3.celiac": "Celiaquía (sin gluten)",
       "form.step3.lactose": "Intolerancia a la lactosa",
       "form.step3.nuts": "Alergia a frutos secos",
-      "form.step3.vegetarian": "Vegetariano/a",
-      "form.step3.vegan": "Vegano/a",
+      "form.step3.vegetarian": "Vegetariano/Vegetariana",
+      "form.step3.vegan": "Vegano/Vegana",
       "form.step3.details": "Otros / Detalles (indica a quién aplica cada intolerancia)",
       "form.step3.details.placeholder": "Ej: Niño/a 2 - celíaco/a. Yo - vegetariana.",
 
@@ -77,7 +77,7 @@ var I18n = (function () {
       "form.step4.legalText": "Autorizo a Amazon Spain Fulfillment, S.L.U. a captar, reproducir y difundir mi imagen y la de mis acompañantes menores durante el evento Family Day 2026 celebrado el 19 de septiembre de 2026 en las instalaciones de Amazon BCN1. Las imágenes podrán ser utilizadas en comunicaciones internas, redes sociales corporativas y materiales promocionales del evento. Esta autorización se otorga con carácter gratuito y por tiempo indefinido, pudiendo ser revocada en cualquier momento mediante comunicación escrita.",
       "form.step4.authorize": "Autorizo",
       "form.step4.deny": "No autorizo",
-      "form.step4.signature": "Firma del/la registrante",
+      "form.step4.signature": "Firma de la persona registrante",
       "form.step4.clearSignature": "Limpiar firma",
 
       "form.step5.title": "Resumen de Registro",
@@ -99,7 +99,7 @@ var I18n = (function () {
       "success.loginLabel": "Login",
       "success.companionsLabel": "Acompañantes",
       "success.download": "Descargar entrada",
-      "success.warning": "IMPORTANTE - Acceso al evento: Es obligatorio llevar el badge identificativo de Amazon para acceder al evento. Tus familiares/acompañantes deberán venir acompañados de la persona registrada.",
+      "success.warning": "IMPORTANTE - Acceso al evento: Es obligatorio llevar el badge identificativo de Amazon para acceder al evento. Tus familiares/acompa\u00F1antes deber\u00E1n venir con la persona que se registr\u00F3.",
       "success.backHome": "← Volver al inicio",
       "success.ticketFooter": "¡Os esperamos con toda la familia! 🎊 — Amazon BCN1",
 
@@ -132,7 +132,7 @@ var I18n = (function () {
       "admin.scanner.manualPlaceholder": "Introduce el login",
       "admin.scanner.checkIn": "Registrar entrada",
       "admin.scanner.success": "✓ Check-in realizado",
-      "admin.scanner.alreadyCheckedIn": "Ya registrado como presente",
+      "admin.scanner.alreadyCheckedIn": "Ya tiene check-in realizado",
       "admin.scanner.notFound": "Registro no encontrado",
       "admin.scanner.invalidQr": "QR no válido",
       "admin.scanner.cameraError": "No se puede acceder a la cámara. Permite el acceso o utiliza la entrada manual.",
@@ -174,9 +174,9 @@ var I18n = (function () {
       "partners.patasArriba.name": "Patas Para Arriba",
       "partners.patasArriba.desc": "Fundaci\u00F3n por un v\u00EDnculo sano entre personas y animales. Trabajan en educaci\u00F3n en escuelas, investigaci\u00F3n y apoyo a la adopci\u00F3n responsable en Catalunya.",
       "partners.glamazon.name": "Glamazon",
-      "partners.glamazon.desc": "Grupo de empleados/as de Amazon para la comunidad LGBTQIA+ y aliados. Creamos un espacio de apoyo centrado en la diversidad de identidades de género, orientaciones sexuales y expresiones.",
+      "partners.glamazon.desc": "Grupo de personas empleadas de Amazon para la comunidad LGBTQIA+ y aliades. Creamos un espacio de apoyo centrado en la diversidad de identidades de g\u00E9nero, orientaciones sexuales y expresiones.",
 
-      "registration.duplicate.title": "⚠️ Ya estás registrado/a",
+      "registration.duplicate.title": "\u26A0\uFE0F Ya existe un registro",
       "registration.duplicate.message": "Ya existe un registro con este login. ¿Quieres actualizar tu información?",
       "registration.duplicate.update": "Sí, actualizar",
       "registration.duplicate.cancel": "Cancelar"
