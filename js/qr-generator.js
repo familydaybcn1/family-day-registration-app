@@ -27,33 +27,32 @@ var QRGenerator = (function () {
     container.style.display = 'inline-block';
 
     if (typeof QRCode !== 'undefined') {
-      // Use table mode which renders as IMG (better for html2canvas capture)
       new QRCode(container, {
         text: payload,
-        width: 200,
-        height: 200,
+        width: 180,
+        height: 180,
         colorDark: '#232F3E',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
       });
 
-      // After QR is generated, convert canvas to img for better compatibility
+      // After QR generates, convert canvas to img and remove canvas
+      // This ensures html2canvas can capture it on mobile
       setTimeout(function() {
         var canvas = container.querySelector('canvas');
-        if (canvas) {
+        var existingImg = container.querySelector('img');
+        if (canvas && !existingImg) {
           var img = document.createElement('img');
           img.src = canvas.toDataURL('image/png');
-          img.style.width = '200px';
-          img.style.height = '200px';
+          img.style.width = '180px';
+          img.style.height = '180px';
           img.style.display = 'block';
-          img.setAttribute('data-qr-img', 'true');
-          canvas.style.display = 'none';
+          canvas.parentNode.removeChild(canvas);
           container.appendChild(img);
         }
-      }, 50);
+      }, 100);
     } else {
       container.textContent = payload;
-      console.warn('[QRGenerator] QRCode library not available');
     }
 
     return container;
@@ -67,19 +66,12 @@ var QRGenerator = (function () {
    */
   function downloadTicketAsImage(ticketElement, filename) {
     if (typeof html2canvas === 'undefined') {
-      console.warn('[QRGenerator] html2canvas library not available');
+      alert('Error: no se puede descargar. Recarga la página e intenta de nuevo.');
       return;
     }
 
-    // The QR is already rendered as an IMG (converted in generate function)
-    // Just hide any remaining canvas elements before capture
-    var qrCanvases = ticketElement.querySelectorAll('canvas');
-    qrCanvases.forEach(function(c) { c.style.display = 'none'; });
-
-    // Use lower scale on mobile to avoid memory issues
     var scale = window.innerWidth < 768 ? 2 : 3;
 
-    // Delay to ensure everything is rendered
     setTimeout(function() {
       html2canvas(ticketElement, {
         scale: scale,
@@ -88,21 +80,18 @@ var QRGenerator = (function () {
         logging: false,
         allowTaint: true
       }).then(function (canvas) {
-      var dataURL = canvas.toDataURL('image/png');
-      var link = document.createElement('a');
-      link.href = dataURL;
-      link.download = filename || 'family-day-2026-ticket.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Restore canvas visibility
-      qrCanvases.forEach(function(c) { c.style.display = ''; });
-    }).catch(function (err) {
-      console.error('[QRGenerator] html2canvas error:', err);
-      qrCanvases.forEach(function(c) { c.style.display = ''; });
-    });
-    }, 200); // end setTimeout
+        var dataURL = canvas.toDataURL('image/png');
+        var link = document.createElement('a');
+        link.href = dataURL;
+        link.download = filename || 'family-day-2026-ticket.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }).catch(function (err) {
+        console.error('[QRGenerator] html2canvas error:', err);
+        alert('Error al descargar. Intenta de nuevo.');
+      });
+    }, 300);
   }
 
   /**
