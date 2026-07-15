@@ -117,7 +117,7 @@ var FormStore = (function () {
   function toPayload() {
     return {
       fullName: data.fullName,
-      login: data.login,
+      login: data.login ? data.login.toLowerCase().trim() : '',
       email: data.email,
       dni: data.dni,
       department: data.department,

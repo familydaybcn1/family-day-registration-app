@@ -116,8 +116,11 @@ function submitRegistration(data) {
   try {
     var sheet = getSheet();
 
-    // Check for duplicate login in column C
+    // Check for duplicate login in column C OR duplicate DNI in column E
     var existingRow = findRowByLogin(sheet, data.login);
+    if (existingRow === -1 && data.dni) {
+      existingRow = findRowByDNI(sheet, data.dni);
+    }
     if (existingRow !== -1) {
       return {
         status: 'duplicate',
@@ -198,6 +201,9 @@ function updateRegistration(data) {
   try {
     var sheet = getSheet();
     var targetRow = findRowByLogin(sheet, data.login);
+    if (targetRow === -1 && data.dni) {
+      targetRow = findRowByDNI(sheet, data.dni);
+    }
 
     if (targetRow === -1) {
       return { status: 'error', message: 'Registration not found for login: ' + data.login };
@@ -258,6 +264,25 @@ function findRowByLogin(sheet, login) {
   for (var i = 0; i < data.length; i++) {
     if (String(data[i][2]).toLowerCase() === String(login).toLowerCase()) {
       return i + 1; // Sheet rows are 1-indexed
+    }
+  }
+  return -1;
+}
+
+/**
+ * Finds a row by DNI in column E (case-insensitive, trimmed).
+ *
+ * @param {Sheet} sheet - The spreadsheet sheet to search
+ * @param {string} dni - The DNI/NIE to search for
+ * @returns {number} 1-indexed row number, or -1 if not found
+ */
+function findRowByDNI(sheet, dni) {
+  if (!dni) return -1;
+  var data = sheet.getDataRange().getValues();
+  var searchDNI = String(dni).trim().toUpperCase();
+  for (var i = 0; i < data.length; i++) {
+    if (String(data[i][4]).trim().toUpperCase() === searchDNI) {
+      return i + 1;
     }
   }
   return -1;
