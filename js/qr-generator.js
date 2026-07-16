@@ -64,34 +64,161 @@ var QRGenerator = (function () {
    * @param {HTMLElement} ticketElement - The .ticket element to capture
    * @param {string} filename - Desired filename for the download
    */
+  /**
+   * Download ticket as PNG by drawing it directly on a canvas.
+   * This approach works reliably on all devices including mobile.
+   */
   function downloadTicketAsImage(ticketElement, filename) {
-    if (typeof html2canvas === 'undefined') {
-      alert('Error: no se puede descargar. Recarga la página e intenta de nuevo.');
-      return;
+    // Get the QR image data
+    var qrImg = ticketElement.querySelector('.qr-code-container img');
+    if (!qrImg) {
+      qrImg = ticketElement.querySelector('.qr-code-container canvas');
     }
 
-    var scale = window.innerWidth < 768 ? 2 : 3;
-
-    setTimeout(function() {
-      html2canvas(ticketElement, {
-        scale: scale,
-        useCORS: true,
-        backgroundColor: '#FFFFFF',
-        logging: false,
-        allowTaint: true
-      }).then(function (canvas) {
-        var dataURL = canvas.toDataURL('image/png');
-        var link = document.createElement('a');
-        link.href = dataURL;
-        link.download = filename || 'family-day-2026-ticket.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }).catch(function (err) {
-        console.error('[QRGenerator] html2canvas error:', err);
-        alert('Error al descargar. Intenta de nuevo.');
+    // Get ticket data from the ticket element
+    var loginEl = ticketElement.querySelector('.ticket__info');
+    var login = '';
+    var companions = '0';
+    if (loginEl) {
+      var texts = loginEl.querySelectorAll('p');
+      texts.forEach(function(p) {
+        if (p.textContent.indexOf('Login:') !== -1) login = p.textContent.split('Login:')[1].trim();
+        if (p.textContent.indexOf('Acompa') !== -1) login = login; // keep login
       });
-    }, 300);
+    }
+
+    // Read from sessionStorage as fallback
+    try {
+      if (!login) login = sessionStorage.getItem('registration_login') || 'user';
+      companions = sessionStorage.getItem('registration_companions') || '0';
+    } catch(e) {}
+
+    // Create canvas and draw ticket manually
+    var canvas = document.createElement('canvas');
+    var w = 500;
+    var h = 700;
+    canvas.width = w * 2;
+    canvas.height = h * 2;
+    var ctx = canvas.getContext('2d');
+    ctx.scale(2, 2);
+
+    // Background
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, w, h);
+
+    // Left border (green/red based on auth)
+    var imageAuth = '';
+    try { imageAuth = sessionStorage.getItem('registration_imageAuth') || ''; } catch(e) {}
+    var borderColor = (imageAuth === 'authorize') ? '#1B8B00' : '#D32F2F';
+    ctx.fillStyle = borderColor;
+    ctx.fillRect(0, 0, 10, h);
+    ctx.fillRect(w - 10, 0, 10, h);
+
+    // Header background
+    ctx.fillStyle = '#232F3E';
+    ctx.fillRect(10, 0, w - 20, 100);
+
+    // Header text
+    ctx.fillStyle = '#FF9900';
+    ctx.font = 'bold 22px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎉 FAMILY DAY 2026 🎉', w/2, 45);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '14px -apple-system, sans-serif';
+    ctx.fillText('Amazon BCN1 — 19 sept 2026', w/2, 75);
+
+    // Banner
+    ctx.fillStyle = '#E8F5E9';
+    ctx.fillRect(10, 100, w - 20, 40);
+    ctx.fillStyle = '#232F3E';
+    ctx.font = 'bold 14px -apple-system, sans-serif';
+    ctx.fillText('🎊 ¡Vamos a disfrutar en familia! 🎊', w/2, 125);
+
+    // Info section
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#333333';
+    ctx.font = '15px -apple-system, sans-serif';
+    var y = 175;
+    ctx.fillText('👤 Login: ' + login, 30, y); y += 28;
+    ctx.fillText('👥 Acompañantes: ' + companions, 30, y); y += 28;
+    ctx.fillText('📅 Fecha: 19 sept 2026', 30, y); y += 28;
+    ctx.fillText('⏰ Horario: 09:30hs – 14:00hs', 30, y); y += 28;
+    ctx.fillText('📍 Lugar: Amazon BCN1, Av de les Garrigues 2-12', 30, y);
+
+    // QR section — draw the QR image onto canvas
+    var qrY = 320;
+    ctx.textAlign = 'center';
+
+    if (qrImg && qrImg.src) {
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function() {
+        ctx.drawImage(img, (w - 160) / 2, qrY, 160, 160);
+
+        // Text under QR
+        ctx.fillStyle = '#565959';
+        ctx.font = '11px -apple-system, sans-serif';
+        ctx.fillText('Muestra este QR en la entrada', w/2, qrY + 175);
+
+        // Footer
+        ctx.fillStyle = '#FFF8E1';
+        ctx.fillRect(10, h - 80, w - 20, 50);
+        ctx.fillStyle = '#232F3E';
+        ctx.font = 'bold 13px -apple-system, sans-serif';
+        ctx.fillText('¡Os esperamos con toda la familia! 🎊 — Amazon BCN1', w/2, h - 50);
+
+        // Badge reminder
+        ctx.fillStyle = '#232F3E';
+        ctx.fillRect(10, h - 30, w - 20, 30);
+        ctx.fillStyle = '#FF9900';
+        ctx.font = '10px -apple-system, sans-serif';
+        ctx.fillText('⚠️ Recuerda llevar tu badge de Amazon para acceder al evento', w/2, h - 12);
+
+        // Download
+        triggerDownload(canvas, filename);
+      };
+      img.onerror = function() {
+        // If image fails, still download without QR
+        ctx.fillStyle = '#232F3E';
+        ctx.font = 'bold 14px -apple-system, sans-serif';
+        ctx.fillText('FAMILYDAY2026|' + login + '|' + companions, w/2, qrY + 80);
+
+        ctx.fillStyle = '#FFF8E1';
+        ctx.fillRect(10, h - 80, w - 20, 50);
+        ctx.fillStyle = '#232F3E';
+        ctx.font = 'bold 13px -apple-system, sans-serif';
+        ctx.fillText('¡Os esperamos con toda la familia! 🎊 — Amazon BCN1', w/2, h - 50);
+
+        triggerDownload(canvas, filename);
+      };
+      img.src = qrImg.src || qrImg.toDataURL('image/png');
+    } else {
+      // No QR available — show text code
+      ctx.fillStyle = '#232F3E';
+      ctx.font = 'bold 14px -apple-system, sans-serif';
+      ctx.fillText('Código: FAMILYDAY2026|' + login + '|' + companions, w/2, qrY + 80);
+
+      ctx.fillStyle = '#FFF8E1';
+      ctx.fillRect(10, h - 80, w - 20, 50);
+      ctx.fillStyle = '#232F3E';
+      ctx.font = 'bold 13px -apple-system, sans-serif';
+      ctx.fillText('¡Os esperamos con toda la familia! 🎊 — Amazon BCN1', w/2, h - 50);
+
+      triggerDownload(canvas, filename);
+    }
+  }
+
+  /**
+   * Trigger the download of a canvas as PNG.
+   */
+  function triggerDownload(canvas, filename) {
+    var dataURL = canvas.toDataURL('image/png');
+    var link = document.createElement('a');
+    link.href = dataURL;
+    link.download = filename || 'family-day-2026-ticket.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   /**
@@ -211,6 +338,12 @@ var QRGenerator = (function () {
       }, 500);
     });
     container.appendChild(downloadBtn);
+
+    // --- Screenshot tip ---
+    var tip = document.createElement('p');
+    tip.style.cssText = 'text-align:center;font-size:0.8rem;color:#565959;margin-top:0.75rem;margin-bottom:1rem;';
+    tip.textContent = '📱 Tip: también puedes hacer captura de pantalla para guardar tu entrada';
+    container.appendChild(tip);
 
     // --- Back to home button ---
     var backBtn = document.createElement('a');
