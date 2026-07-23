@@ -175,6 +175,8 @@ var I18n = (function () {
       "partners.patasArriba.desc": "Fundaci\u00F3n por un v\u00EDnculo sano entre personas y animales. Trabajan en educaci\u00F3n en escuelas, investigaci\u00F3n y apoyo a la adopci\u00F3n responsable en Catalunya.",
       "partners.glamazon.name": "Glamazon",
       "partners.glamazon.desc": "Grupo de personas empleadas de Amazon para la comunidad LGBTQIA+ y aliades. Creamos un espacio de apoyo centrado en la diversidad de identidades de g\u00E9nero, orientaciones sexuales y expresiones.",
+      "partners.latinos.name": "Latinos at Amazon",
+      "partners.latinos.desc": "Grupo de empleados/as que construye comunidad, sentido de pertenencia y desarrollo profesional para Amazonians latinos/as y aliados. A trav\u00E9s de chapters locales en todo el mundo, promovemos inclusi\u00F3n, mentor\u00EDa y celebraci\u00F3n cultural.",
 
       "registration.duplicate.title": "\u26A0\uFE0F Ya existe un registro",
       "registration.duplicate.message": "Ya existe un registro con este login. ¿Quieres actualizar tu información?",
@@ -345,6 +347,8 @@ var I18n = (function () {
       "partners.patasArriba.desc": "Foundation for a healthy bond between people and animals. They work on education in schools, research, and support for responsible adoption in Catalonia.",
       "partners.glamazon.name": "Glamazon",
       "partners.glamazon.desc": "Amazon Employee-Led Group for LGBTQIA+ Amazonians and allies. We create a supportive community focused on diverse gender identities, sexual orientations, and expressions.",
+      "partners.latinos.name": "Latinos at Amazon",
+      "partners.latinos.desc": "Employee-Led Group building community, belonging, and career growth for Latino Amazonians and allies. Through local chapters worldwide, we promote inclusion, mentorship, and cultural celebration.",
 
       "registration.duplicate.title": "⚠️ Already registered",
       "registration.duplicate.message": "A registration with this login already exists. Would you like to update your information?",

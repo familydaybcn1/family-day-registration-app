@@ -446,7 +446,8 @@ var LandingPage = (function () {
       { logo: 'assets/fundacion-roure.png', nameKey: 'partners.roure.name', descKey: 'partners.roure.desc' },
       { logo: 'assets/acathi.png', nameKey: 'partners.acathi.name', descKey: 'partners.acathi.desc' },
       { logo: 'assets/patas-para-arriba.png', nameKey: 'partners.patasArriba.name', descKey: 'partners.patasArriba.desc' },
-      { logo: 'assets/glamazon.png', nameKey: 'partners.glamazon.name', descKey: 'partners.glamazon.desc' }
+      { logo: 'assets/glamazon.png', nameKey: 'partners.glamazon.name', descKey: 'partners.glamazon.desc' },
+      { logo: 'assets/latinos.png', nameKey: 'partners.latinos.name', descKey: 'partners.latinos.desc' }
     ];
 
     var gridItems = '';
