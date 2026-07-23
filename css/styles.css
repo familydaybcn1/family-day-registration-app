@@ -1367,9 +1367,6 @@ a.btn {
   .volunteering-grid {
     grid-template-columns: 1fr 1fr;
   }
-  .volunteering-grid__item:last-child {
-    grid-column: 1 / -1;
-  }
 }
 
 
