@@ -325,25 +325,12 @@ var QRGenerator = (function () {
     ticketWrapper.appendChild(ticket);
     container.appendChild(ticketWrapper);
 
-    // --- Download button ---
-    var downloadBtn = document.createElement('button');
-    downloadBtn.className = 'btn btn--primary btn--block ticket-download-btn';
-    var downloadText = (typeof I18n !== 'undefined') ? I18n.t('success.download') : '📥 Descargar entrada';
-    downloadBtn.textContent = downloadText;
-    downloadBtn.setAttribute('aria-label', downloadText);
-    downloadBtn.addEventListener('click', function () {
-      // Small delay to ensure QR canvas is fully rendered
-      setTimeout(function() {
-        downloadTicketAsImage(ticket, 'family-day-2026-' + login + '.png');
-      }, 500);
-    });
-    container.appendChild(downloadBtn);
-
-    // --- Screenshot tip ---
-    var tip = document.createElement('p');
-    tip.style.cssText = 'text-align:center;font-size:0.8rem;color:#565959;margin-top:0.75rem;margin-bottom:1rem;';
-    tip.textContent = '📱 Tip: también puedes hacer captura de pantalla para guardar tu entrada';
-    container.appendChild(tip);
+    // --- Screenshot instruction (primary action) ---
+    var screenshotMsg = document.createElement('div');
+    screenshotMsg.style.cssText = 'text-align:center;background-color:#FFF3E0;border:2px solid #FF9900;border-radius:12px;padding:1rem 1.5rem;margin-top:1rem;margin-bottom:1rem;';
+    screenshotMsg.innerHTML = '<p style="font-size:1.1rem;font-weight:700;color:#232F3E;margin-bottom:0.25rem;">📱 Haz una captura de pantalla</p>' +
+      '<p style="font-size:0.9rem;color:#565959;">Esta es tu entrada — guárdala en tu móvil y muéstrala el día del evento</p>';
+    container.appendChild(screenshotMsg);
 
     // --- Back to home button ---
     var backBtn = document.createElement('a');
