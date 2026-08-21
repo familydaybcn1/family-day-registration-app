@@ -419,8 +419,7 @@ var LandingPage = (function () {
         break;
 
       case 'landing.activities.food':
-        content = '' +
-          '<p style="color:#333;line-height:1.5;">Un men\u00FA pensado para toda la familia. Opciones variadas y sabores para todas las edades. \u00A1A disfrutar!</p>';
+        content = getFoodContent();
         break;
 
       default:
@@ -434,6 +433,65 @@ var LandingPage = (function () {
   }
 
   /**
+   * Build the Food & Drinks modal content, including the Momocho ice cream
+   * teaser with the 12 selected flavors and their allergen badges (bilingual).
+   * @returns {string} HTML content for the food modal
+   */
+  function getFoodContent() {
+    var flavors = [
+      { key: 'strawberry', badges: ['gf', 'nf'] },
+      { key: 'mangoSorbet', badges: ['vg', 'lf', 'gf', 'nf'] },
+      { key: 'veganChocolate', badges: ['vg', 'lf', 'gf', 'nf'] },
+      { key: 'stracciatella', badges: ['gf', 'nf'] },
+      { key: 'bananaSplit', badges: ['gf', 'nf'] },
+      { key: 'dulceDeLeche', badges: ['gf', 'nf'] },
+      { key: 'vanilla', badges: ['gf', 'nf'] },
+      { key: 'oreo', badges: ['cg'] },
+      { key: 'passionSorbet', badges: ['vg', 'lf', 'gf', 'nf'] },
+      { key: 'raspberrySorbet', badges: ['vg', 'lf', 'gf', 'nf'] },
+      { key: 'redBerriesYogurt', badges: ['gf', 'nf'] },
+      { key: 'pistachio', badges: ['cf'] }
+    ];
+
+    var badgeMap = {
+      vg: { key: 'momocho.badge.vegan', warn: false },
+      lf: { key: 'momocho.badge.lactoseFree', warn: false },
+      gf: { key: 'momocho.badge.glutenFree', warn: false },
+      nf: { key: 'momocho.badge.nutFree', warn: false },
+      cg: { key: 'momocho.badge.containsGluten', warn: true },
+      cf: { key: 'momocho.badge.containsNuts', warn: true }
+    };
+
+    var items = '';
+    flavors.forEach(function (f) {
+      var badges = '';
+      f.badges.forEach(function (code) {
+        var b = badgeMap[code];
+        var style = b.warn
+          ? 'background:#fff4e5;color:#b45309;'
+          : 'background:#e6f4ea;color:#1e7e34;';
+        badges += '<span style="display:inline-block;font-size:0.6rem;font-weight:600;padding:2px 6px;border-radius:10px;margin:3px 3px 0 0;' + style + '">' + I18n.t(b.key) + '</span>';
+      });
+      items += '' +
+        '<div style="border:1px solid #ececec;border-radius:8px;padding:8px 10px;background:#fff;">' +
+          '<div style="font-weight:700;font-size:0.82rem;color:var(--primary);margin-bottom:2px;">' + I18n.t('momocho.flavor.' + f.key) + '</div>' +
+          '<div>' + badges + '</div>' +
+        '</div>';
+    });
+
+    return '' +
+      '<p style="color:#333;line-height:1.5;margin-bottom:1rem;">' + I18n.t('momocho.food.intro') + '</p>' +
+      '<div style="background:#fef6f0;border:1px solid #f6d9c6;border-radius:12px;padding:14px;">' +
+        '<div style="text-align:center;margin-bottom:8px;">' +
+          '<img src="assets/momocho.png" alt="Momocho" style="max-height:52px;max-width:70%;object-fit:contain;" onerror="this.style.display=\'none\'">' +
+        '</div>' +
+        '<h4 style="text-align:center;font-size:1.05rem;font-weight:800;margin-bottom:0.35rem;color:var(--primary);">' + I18n.t('momocho.teaser.title') + '</h4>' +
+        '<p style="text-align:center;color:#555;font-size:0.85rem;line-height:1.45;margin-bottom:0.75rem;">' + I18n.t('momocho.teaser.desc') + '</p>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;">' + items + '</div>' +
+      '</div>';
+  }
+
+  /**
    * Show the Volunteering modal with NGO partners and Glamazon.
    */
   function showVolunteeringModal() {
@@ -444,7 +502,6 @@ var LandingPage = (function () {
     var partners = [
       { logo: 'assets/bona-voluntat.png', nameKey: 'partners.bonaVoluntat.name', descKey: 'partners.bonaVoluntat.desc' },
       { logo: 'assets/fundacion-roure.png', nameKey: 'partners.roure.name', descKey: 'partners.roure.desc' },
-      { logo: 'assets/acathi.png', nameKey: 'partners.acathi.name', descKey: 'partners.acathi.desc' },
       { logo: 'assets/patas-para-arriba.png', nameKey: 'partners.patasArriba.name', descKey: 'partners.patasArriba.desc' },
       { logo: 'assets/glamazon.png', nameKey: 'partners.glamazon.name', descKey: 'partners.glamazon.desc' },
       { logo: 'assets/latinos.png', nameKey: 'partners.latinos.name', descKey: 'partners.latinos.desc' }
