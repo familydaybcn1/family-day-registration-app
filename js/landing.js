@@ -453,41 +453,39 @@ var LandingPage = (function () {
       { key: 'pistachio', badges: ['cf'] }
     ];
 
-    var badgeMap = {
-      vg: { key: 'momocho.badge.vegan', warn: false },
-      lf: { key: 'momocho.badge.lactoseFree', warn: false },
-      gf: { key: 'momocho.badge.glutenFree', warn: false },
-      nf: { key: 'momocho.badge.nutFree', warn: false },
-      cg: { key: 'momocho.badge.containsGluten', warn: true },
-      cf: { key: 'momocho.badge.containsNuts', warn: true }
-    };
+    var icons = { vg: '\uD83C\uDF31', gf: '\uD83C\uDF3E', nf: '\uD83E\uDD5C' };
 
     var items = '';
     flavors.forEach(function (f) {
-      var badges = '';
+      var marks = '';
       f.badges.forEach(function (code) {
-        var b = badgeMap[code];
-        var style = b.warn
-          ? 'background:#fff4e5;color:#b45309;'
-          : 'background:#e6f4ea;color:#1e7e34;';
-        badges += '<span style="display:inline-block;font-size:0.6rem;font-weight:600;padding:2px 6px;border-radius:10px;margin:3px 3px 0 0;' + style + '">' + I18n.t(b.key) + '</span>';
+        if (code === 'cg') {
+          marks += '<span style="color:#b45309;font-size:0.64rem;font-weight:600;">\u26A0\uFE0F ' + I18n.t('momocho.badge.containsGluten') + '</span>';
+        } else if (code === 'cf') {
+          marks += '<span style="color:#b45309;font-size:0.64rem;font-weight:600;">\u26A0\uFE0F ' + I18n.t('momocho.badge.containsNuts') + '</span>';
+        } else if (icons[code]) {
+          marks += icons[code] + ' ';
+        }
       });
       items += '' +
-        '<div style="border:1px solid #ececec;border-radius:8px;padding:8px 10px;background:#fff;">' +
-          '<div style="font-weight:700;font-size:0.82rem;color:var(--primary);margin-bottom:2px;">' + I18n.t('momocho.flavor.' + f.key) + '</div>' +
-          '<div>' + badges + '</div>' +
+        '<div style="font-size:0.78rem;color:#232F3E;padding:2px 0;line-height:1.3;">' +
+          '<span style="font-weight:600;">' + I18n.t('momocho.flavor.' + f.key) + '</span> ' +
+          '<span style="font-size:0.74rem;">' + marks + '</span>' +
         '</div>';
     });
 
     return '' +
-      '<p style="color:#333;line-height:1.5;margin-bottom:1rem;">' + I18n.t('momocho.food.intro') + '</p>' +
-      '<div style="background:#fef6f0;border:1px solid #f6d9c6;border-radius:12px;padding:14px;">' +
-        '<div style="text-align:center;margin-bottom:8px;">' +
-          '<img src="assets/momocho.png" alt="Momocho" style="max-height:52px;max-width:70%;object-fit:contain;" onerror="this.style.display=\'none\'">' +
+      '<p style="color:#333;line-height:1.4;margin-bottom:0.6rem;font-size:0.9rem;">' + I18n.t('momocho.food.intro') + '</p>' +
+      '<div style="background:#fef6f0;border:1px solid #f6d9c6;border-radius:12px;padding:12px;">' +
+        '<div style="text-align:center;margin-bottom:4px;">' +
+          '<img src="assets/momocho.png" alt="Momocho" style="max-height:38px;max-width:60%;object-fit:contain;" onerror="this.style.display=\'none\'">' +
         '</div>' +
-        '<h4 style="text-align:center;font-size:1.05rem;font-weight:800;margin-bottom:0.35rem;color:var(--primary);">' + I18n.t('momocho.teaser.title') + '</h4>' +
-        '<p style="text-align:center;color:#555;font-size:0.85rem;line-height:1.45;margin-bottom:0.75rem;">' + I18n.t('momocho.teaser.desc') + '</p>' +
-        '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;">' + items + '</div>' +
+        '<div style="text-align:center;font-weight:800;font-size:0.92rem;color:var(--primary);margin-bottom:3px;">' + I18n.t('momocho.teaser.title') + '</div>' +
+        '<p style="text-align:center;color:#555;font-size:0.78rem;line-height:1.35;margin-bottom:0.6rem;">' + I18n.t('momocho.teaser.desc') + '</p>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px;">' + items + '</div>' +
+        '<p style="font-size:0.62rem;color:#777;margin:8px 0 0;line-height:1.5;">' +
+          '\uD83C\uDF31 ' + I18n.t('momocho.badge.vegan') + ' / ' + I18n.t('momocho.badge.lactoseFree') + ' \u00B7 \uD83C\uDF3E ' + I18n.t('momocho.badge.glutenFree') + ' \u00B7 \uD83E\uDD5C ' + I18n.t('momocho.badge.nutFree') +
+        '</p>' +
       '</div>';
   }
 
