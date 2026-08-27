@@ -15,26 +15,31 @@ var Step1 = (function () {
    */
   var DEPARTMENTS = [
     'AMXL',
-    'ATS',
-    'CO',
+    'CT',
     'Customer Service',
+    'EU Central Flow Team',
     'Finance',
-    'HR/PXT',
     'IB (BCN1)',
     'ICQA (BCN1)',
     'IT',
+    'IXD',
     'Legal',
     'Loss Prevention',
+    'NFT BI',
+    'NFT PM',
     'OB (BCN1)',
     'Ops Engineering',
     'Operations',
     'Procurement',
     'Programs',
+    'PXT',
     'RME (BCN1)',
     'Safety',
     'SUPPORT (BCN1)',
     'Transportation',
-    'UES4'
+    'TS/TNS',
+    'UES4',
+    'VF'
   ];
 
   /**
