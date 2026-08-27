@@ -14,11 +14,13 @@ var Step1 = (function () {
    * List of 16 department options.
    */
   var DEPARTMENTS = [
+    'AMOC/GESA/RME (NOC)',
     'AMXL',
     'CT',
     'Customer Service',
     'EU Central Flow Team',
     'Finance',
+    'Guest / Invitado (no Amazon)',
     'IB (BCN1)',
     'ICQA (BCN1)',
     'IT',
@@ -39,7 +41,8 @@ var Step1 = (function () {
     'Transportation',
     'TS/TNS',
     'UES4',
-    'VF'
+    'VF',
+    'Volunteers & Affinity Groups'
   ];
 
   /**

@@ -290,11 +290,13 @@ var AdminDashboard = (function () {
    * @private
    */
   function _renderFiltersHTML() {
-    var departments = ['AMXL', 'CT', 'Customer Service', 'EU Central Flow Team',
-      'Finance', 'IB (BCN1)', 'ICQA (BCN1)', 'IT', 'IXD', 'Legal',
-      'Loss Prevention', 'NFT BI', 'NFT PM', 'OB (BCN1)', 'Ops Engineering',
-      'Operations', 'Procurement', 'Programs', 'PXT', 'RME (BCN1)', 'Safety',
-      'SUPPORT (BCN1)', 'Transportation', 'TS/TNS', 'UES4', 'VF'];
+    var departments = ['AMOC/GESA/RME (NOC)', 'AMXL', 'CT', 'Customer Service',
+      'EU Central Flow Team', 'Finance', 'Guest / Invitado (no Amazon)',
+      'IB (BCN1)', 'ICQA (BCN1)', 'IT', 'IXD', 'Legal', 'Loss Prevention',
+      'NFT BI', 'NFT PM', 'OB (BCN1)', 'Ops Engineering', 'Operations',
+      'Procurement', 'Programs', 'PXT', 'RME (BCN1)', 'Safety',
+      'SUPPORT (BCN1)', 'Transportation', 'TS/TNS', 'UES4', 'VF',
+      'Volunteers & Affinity Groups'];
 
     var html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-md);">';
 
