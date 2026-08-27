@@ -325,11 +325,17 @@ var QRGenerator = (function () {
     ticketWrapper.appendChild(ticket);
     container.appendChild(ticketWrapper);
 
-    // --- Screenshot instruction (primary action) ---
+    // --- Screenshot + badge instruction (primary action, bilingual, high-visibility) ---
     var screenshotMsg = document.createElement('div');
-    screenshotMsg.style.cssText = 'text-align:center;background-color:#FFF3E0;border:2px solid #FF9900;border-radius:12px;padding:1rem 1.5rem;margin-top:1rem;margin-bottom:1rem;';
-    screenshotMsg.innerHTML = '<p style="font-size:1.1rem;font-weight:700;color:#232F3E;margin-bottom:0.25rem;">📱 Haz una captura de pantalla</p>' +
-      '<p style="font-size:0.9rem;color:#565959;">Esta es tu entrada — guárdala en tu móvil y muéstrala el día del evento</p>';
+    screenshotMsg.style.cssText = 'text-align:center;background-color:#FFF3E0;border:3px solid #FF9900;border-radius:14px;padding:1.25rem 1.5rem;margin-top:1.25rem;margin-bottom:1.25rem;box-shadow:0 3px 10px rgba(255,153,0,0.25);';
+    screenshotMsg.innerHTML = '' +
+      '<p style="font-size:1.35rem;font-weight:900;color:#232F3E;margin-bottom:0.6rem;letter-spacing:1px;">📸 IMPORTANTE · IMPORTANT</p>' +
+      '<p style="font-size:1.05rem;font-weight:700;color:#232F3E;margin-bottom:0.35rem;">Haz una captura de pantalla de esta entrada</p>' +
+      '<p style="font-size:1.05rem;font-weight:700;color:#232F3E;margin-bottom:0.85rem;">Take a screenshot of this ticket</p>' +
+      '<div style="background-color:#232F3E;border-radius:10px;padding:0.7rem 1rem;">' +
+      '<p style="font-size:0.95rem;font-weight:700;color:#FF9900;margin-bottom:0.2rem;">🪪 Tráela el día del evento junto con tu badge de Amazon</p>' +
+      '<p style="font-size:0.95rem;font-weight:700;color:#FF9900;margin:0;">🪪 Bring it on the event day together with your Amazon badge</p>' +
+      '</div>';
     container.appendChild(screenshotMsg);
 
     // --- Back to home button ---
